@@ -21,6 +21,8 @@ export default () => {
                     <Menu.Item key="2">Create Account</Menu.Item>
                     <Menu.Item key='3' style={{position: 'absolute', left: '50%'}}>
                         <Icon type="play-square" />
+                    </Menu.Item>
+                    <Menu.Item key='4' style={{position: 'absolute', left: '52%'}}>
                         <Icon type="pause-circle" />
                     </Menu.Item>
 
