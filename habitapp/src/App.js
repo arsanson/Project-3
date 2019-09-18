@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import BeforeLogin from './Component/Pages/index'
+import loggedIn from './Component/Pages/loggedIn'
 import {BrowserRouter as Router, Route} from "react-router-dom";
 
 
@@ -13,6 +14,7 @@ function App() {
 
 
       <Route exact path="/" component={BeforeLogin} />
+      <Route exact path="/login" component={loggedIn} />
 
 
 
