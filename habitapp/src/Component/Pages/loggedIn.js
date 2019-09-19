@@ -1,13 +1,32 @@
 import React from "react"
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 import 'antd/dist/antd.css'
+import { Calendar } from 'antd';
+import { List } from 'antd';
+
 
 export default () => {
 
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
+    const data = [
+        'Racing car sprays burning fuel into crowd.',
+        'Japanese princess to wed commoner.',
+        'Australian walks 100km after outback crash.',
+        'Man charged over missing wedding girl.',
+        'Los Angeles battles huge wildfires.',
+    ];
+
+
+    function onPanelChange(value, mode) {
+        console.log(value, mode);
+    }
 
     return (
+
+
+
+
         <Layout style={{ height: '100vh' }}>
             <Header className="header">
                 <div className="logo" />
@@ -17,8 +36,8 @@ export default () => {
                     defaultSelectedKeys={['2']}
                     style={{ lineHeight: '64px' }}
                 >
-                    <Menu.Item key="1">Login</Menu.Item>
-                    <Menu.Item key="2">Create Account</Menu.Item>
+                    <Menu.Item key="1">Logout</Menu.Item>
+                    <Menu.Item key="2">Welcome!</Menu.Item>
                     <Menu.Item key='3' style={{ position: 'absolute', left: '50%' }}>
                         <Icon type="play-square" />
                     </Menu.Item>
@@ -34,6 +53,9 @@ export default () => {
 
 
                 </Breadcrumb>
+
+
+
                 <Layout style={{ height: '100%', padding: '24px 0', background: '#fff' }}>
                     <Sider width={300} style={{ background: '#fff' }}>
                         <Menu
@@ -78,10 +100,35 @@ export default () => {
                             </SubMenu>
                         </Menu>
                     </Sider>
-                    <Content style={{ padding: '0 24px', minHeight: 280, textAlign: 'center', fontSize: '2em' }}>Todo List</Content>
+                    <div style={{ width: 300, border: '1px solid #d9d9d9', borderRadius: 4 }}>
+                        <Layout style={{ position: "absolute", maxHeight: 150 }}></Layout>
+                        <Calendar fullscreen={false} onPanelChange={onPanelChange}
+                        /></div>
+                   
+                    <Content style={{ padding: '0 24px', minHeight: 280, textAlign: 'center', fontSize: '2em' }}>
+                    <div>
+                        <h3 style={{ margin: '16px 0' }}>Todo List</h3>
+                        <List
+                            size="large"
+                            header={<div>Header</div>}
+                            footer={<div>Footer</div>}
+                            bordered
+                            dataSource={data}
+                            renderItem={item => <List.Item>{item}</List.Item>}
+                        />
+                    </div>,
+        </Content>
                 </Layout>
+
+
+
+
+
+
+
+
             </Content>
             <Footer style={{ textAlign: 'center' }}>Copyright © 2019 Gatech Bootcamp Project 3</Footer>
         </Layout >
     )
-}
+} 
