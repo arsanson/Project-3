@@ -2,13 +2,15 @@ import React, { Component } from "react"
 import { Layout, Menu, Breadcrumb, Icon, Drawer, Form, Input, Button, Checkbox } from 'antd'
 import 'antd/dist/antd.css'
 import '../../beforeLogin.css'
+import ReactCountdownClock from 'react-countdown-clock'
+
 
 class index extends Component {
 
     state = {
         visible: false,
         time: "00:00:00",
-        amPm: "am"
+        amPm: "am",
     };
 
     showDrawer = () => {
@@ -34,6 +36,12 @@ class index extends Component {
         });
     }
 
+
+
+
+    // Timer
+
+    // Timer
 
 
 
@@ -99,9 +107,9 @@ class index extends Component {
         var objDate = new Date();
 
         var strDate =
-            objDate.toLocaleString("en", { month: "long"  }) + ' ' +
+            objDate.toLocaleString("en", { month: "long" }) + ' ' +
             objDate.toLocaleString("en", { day: "numeric" }) + ', ' +
-            objDate.toLocaleString("en", { year: "numeric"});
+            objDate.toLocaleString("en", { year: "numeric" });
 
         return (
             <Layout style={{ height: '100vh' }}>
@@ -192,7 +200,7 @@ class index extends Component {
                                         <span>
                                             <Icon type="schedule" />
                                             {strDate}
-                                    </span>
+                                        </span>
                                     </Menu.Item>
                                 </Menu>
                                 <SubMenu
@@ -214,7 +222,7 @@ class index extends Component {
                                     </Menu.Item>
                                     <Menu.Item key="6">
 
-                                        <Button type="primary" block>
+                                        <Button type="primary" block onClick={this.showTimer}>
                                             Start TImer
                                         </Button>
 
@@ -255,6 +263,13 @@ class index extends Component {
 
                         {/* Content------------------------------------------------------------------------------------------------------------- */}
                         <Content style={{ padding: '0 24px', minHeight: 280, textAlign: 'center', fontSize: '2em' }}>
+                            <ReactCountdownClock 
+                                minutes={2}
+                                // seconds={10}
+                                color="	#003366"
+                                alpha={0.9}
+                                size={300}
+                                 />
                             <div className="outer">
                                 <div className="inner">
                                     <div className="most-inner">
