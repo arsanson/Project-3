@@ -131,7 +131,7 @@ class index extends Component {
                         width={350}
                     >
 
-{/*Sidebar PopOut Login-Form--------------------------------------------------------------------------------------------- */}
+                        {/*Sidebar PopOut Login-Form--------------------------------------------------------------------------------------------- */}
                         <Form onSubmit={this.handleSubmit} className="login-form">
                             <Form.Item>
                                 {getFieldDecorator('username', {
@@ -167,11 +167,11 @@ class index extends Component {
                                     </Button>
                             </Form.Item>
                         </Form>
-{/*Sidebar PopOut Login-Form--------------------------------------------------------------------------------------------- */}
+                        {/*Sidebar PopOut Login-Form--------------------------------------------------------------------------------------------- */}
 
 
 
-{/* Sidebar Date/Time Set----------------------------------------------------------------------------------------------- */}
+                        {/* Sidebar Date/Time Set----------------------------------------------------------------------------------------------- */}
                     </Drawer>
                     <Layout style={{ height: '100%', padding: '24px 0', background: '#fff' }}>
                         <Sider width={300} style={{ background: '#fff' }}>
@@ -198,12 +198,22 @@ class index extends Component {
                                     }
                                 >
                                     <Menu.Item key="5">
+
                                         <Input
                                             prefix={<Icon type="clock-circle" theme="twoTone" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                            placeholder="00:00:00"
+                                            placeholder="00:00:00" block
                                         />
 
                                     </Menu.Item>
+                                    <Menu.Item key="6">
+
+                                        <Button type="primary" block>
+                                            Start TImer
+                                        </Button>
+
+                                    </Menu.Item>
+
+
                                 </SubMenu>
                                 <SubMenu
                                     key="sub3"
@@ -219,28 +229,35 @@ class index extends Component {
                                             prefix={<Icon type="clock-circle" theme="twoTone" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                             placeholder="00:00:00"
                                         />
+                                    </Menu.Item>
+                                    <Menu.Item key="6">
+
+                                        <Button type="primary" block>
+                                            Set Alarm
+                                        </Button>
 
                                     </Menu.Item>
+
 
                                 </SubMenu>
                             </Menu>
                         </Sider>
-{/* Sidebar Date/Time Set----------------------------------------------------------------------------------------------- */}
+                        {/* Sidebar Date/Time Set----------------------------------------------------------------------------------------------- */}
 
 
 
-{/* Content------------------------------------------------------------------------------------------------------------- */}
+                        {/* Content------------------------------------------------------------------------------------------------------------- */}
                         <Content style={{ padding: '0 24px', minHeight: 280, textAlign: 'center', fontSize: '2em' }}>
                             <div className="outer">
                                 <div className="inner">
                                     <div className="most-inner">
-                                        
+
                                         <span className={
                                             this.state.time === "00:00:00"
                                                 ? "time blink"
                                                 : "time"}
-                                        > <h1 style={{fontSize: ".5em"}}>Current Time</h1>
-                                          {this.state.time}
+                                        > <h1 style={{ fontSize: ".5em" }}>Current Time</h1>
+                                            {this.state.time}
                                         </span>
 
                                         <span className="amPm">
@@ -250,7 +267,7 @@ class index extends Component {
                                 </div>
                             </div>
                         </Content>
-{/* Content------------------------------------------------------------------------------------------------------------- */}
+                        {/* Content------------------------------------------------------------------------------------------------------------- */}
                     </Layout>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Copyright © 2019 Gatech Bootcamp Project 3</Footer>
