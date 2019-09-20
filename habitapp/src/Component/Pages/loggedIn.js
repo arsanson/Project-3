@@ -7,6 +7,14 @@ import { List } from 'antd';
 
 export default () => {
 
+
+    var objDate = new Date();
+
+    var strDate =
+        objDate.toLocaleString("en", { month: "long" }) + ' ' +
+        objDate.toLocaleString("en", { day: "numeric" }) + ', ' +
+        objDate.toLocaleString("en", { year: "numeric" });
+
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
     const data = [
@@ -69,7 +77,7 @@ export default () => {
                                 <Menu.Item key="1" >
                                     <span>
                                         <Icon type="schedule" />
-                                        September 18, 2019
+                                        {strDate}
                                     </span>
                                 </Menu.Item>
                             </Menu>
