@@ -96,6 +96,13 @@ class index extends Component {
 
         const { getFieldDecorator } = this.props.form;
 
+        var objDate = new Date();
+
+        var strDate =
+            objDate.toLocaleString("en", { month: "long"  }) + ' ' +
+            objDate.toLocaleString("en", { day: "numeric" }) + ', ' +
+            objDate.toLocaleString("en", { year: "numeric"});
+
         return (
             <Layout style={{ height: '100vh' }}>
                 <Header className="header">
@@ -184,7 +191,7 @@ class index extends Component {
                                     <Menu.Item key="1" >
                                         <span>
                                             <Icon type="schedule" />
-                                            September 18, 2019
+                                            {strDate}
                                     </span>
                                     </Menu.Item>
                                 </Menu>
