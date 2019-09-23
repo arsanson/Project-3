@@ -22,14 +22,18 @@ body {
     background-attachment: fixed;
   }
   
-  .outer {
+  #container {
+      height: 60vh;
+  }
+
+  .outer{
     position: relative;
     display: inline-block;
-    top: 10%;
-    left: 10%;
+    top: 6%;
+    left: 19%;
     margin-left: -300px;
-    height: 500px;
-    width: 500px;
+    height: 13em;
+    width: 13em;
     border: 1px solid rgba(225,119,3,.9);
     border-radius: 50%;
     background: 
@@ -43,6 +47,34 @@ body {
       0px 0px 31px 2px rgba(255,119,3,.9), 
       inset 0px 0px 31px 2px rgba(255,119,3,.9);
   }
+
+  #timerOuter,
+  #alarmOuter{
+    position: absolute;
+    display: inline-block;
+    margin-left: -300px;
+    border: 1px solid rgba(225,119,3,.9);
+    border-radius: 50%;
+    background: 
+    linear-gradient(
+      to bottom, 
+      rgba(253,155,18,.8) 0%, 
+      rgba(255,42,4,.8) 73%, 
+      rgba(253,125,45,.8) 100%
+    );
+    box-shadow:
+      0px 0px 31px 2px rgba(255,119,3,.9), 
+      inset 0px 0px 31px 2px rgba(255,119,3,.9);
+    height: 6em;
+    width: 6em;
+    left: 51%;
+    top: -5%;
+  }
+  #alarmOuter{
+    left: 170%;
+  }
+
+
   
   .outer::after {
     content: '';
@@ -60,15 +92,15 @@ body {
   
   .inner {
     position: absolute;
-    height: 400px;
-    width: 400px;
+    height: 11.5em;
+    width: 11.5em;
     border: 1px solid rgba(225,119,3,.9);
     border-radius: 50%;
     /* margin-top: 50px;
     margin-left: 40px;
     margin-right: 40px; */
-    top:10%;
-    left: 10%;
+    top:8%;
+    left: 6%;
     background: 
     linear-gradient(
       to bottom, 
@@ -81,18 +113,20 @@ body {
       inset 0px 0px 31px 2px rgba(255,119,3,.9);
   }
   
-  .most-inner {
+  .most-inner,
+  #timerInner,
+  #alarmInner {
     position: absolute;
     text-align: center;
-    height: 350px;
-    width: 350px;
+    height: 10.5em;
+    width: 10.5em;
     border: 1px solid rgba(225,119,3,1);
     border-radius: 300px;
     /* margin-top: 20px;
     margin-left: 50px;
     margin-right: 50px; */
     top: 5%;
-    left: 6%;
+    left: 4%;
     box-shadow: 
       0px 0px 31px 2px rgba(255,119,3,.9), 
       inset 0px 0px 31px 2px rgba(255,119,3,.9);
@@ -123,6 +157,20 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
+
+
+#timerInner,
+#alarmInner{
+    top: 7%;
+    left: 8%;
+    height: 5em;
+    width: 5em;
+}
+
+
+
+
+
   
   .time {
     color: white;
