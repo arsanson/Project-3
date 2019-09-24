@@ -104,19 +104,19 @@ export default () => {
                         <Layout style={{ position: "absolute", maxHeight: 150 }}></Layout>
                         <Calendar fullscreen={false} onPanelChange={onPanelChange}
                         /></div>
-                   
+
                     <Content style={{ padding: '0 24px', minHeight: 280, textAlign: 'center', fontSize: '2em' }}>
-                    <div>
-                        <h3 style={{ margin: '16px 0' }}>Todo List</h3>
-                        <List
-                            size="large"
-                            header={<div>Header</div>}
-                            footer={<div>Footer</div>}
-                            bordered
-                            dataSource={data}
-                            renderItem={item => <List.Item>{item}</List.Item>}
-                        />
-                    </div>,
+                        <div>
+                            <h3 style={{ margin: '16px 0' }}>Todo List</h3>
+                            <List
+                                size="large"
+                                header={<div>Header</div>}
+                                footer={<div>Footer</div>}
+                                bordered
+                                dataSource={data}
+                                renderItem={item => <List.Item>{item}</List.Item>}
+                            />
+                        </div>,
         </Content>
                 </Layout>
 
@@ -131,4 +131,4 @@ export default () => {
             <Footer style={{ textAlign: 'center' }}>Copyright © 2019 Gatech Bootcamp Project 3</Footer>
         </Layout >
     )
-} 
+}
