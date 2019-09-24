@@ -15,8 +15,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //add routes, both API and view
-app.use(routes);
-app.get('/', (req, res) => res.send('Hello World!'))
+// app.use(routes);
+// app.get('/', (req, res) => res.send('Hello World!'))
 
 // Route for retrieving all Users from the db
 app.get("/user", function (req, res) {
