@@ -1,10 +1,15 @@
 import React, { Component } from "react"
 import { Layout, Menu, Breadcrumb, Icon, Drawer, Form, Input, Button, Checkbox } from 'antd'
 import 'antd/dist/antd.css'
+import Auth from "../../utils/Auth";
 
 class index extends Component {
 
-    state = { visible: false };
+    state = {
+        visible: false,
+        username: '',
+        password: ''
+    };
 
     showDrawer = () => {
         this.setState({
@@ -18,23 +23,24 @@ class index extends Component {
         });
     };
 
-
-
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
+            if (err) console.log(err);
+            const { username, password } = values;
+            if (username && password) {
+                Auth.logIn(username, password, (response) => {
+                    this.context.setUser(response);
+                    this.props.history.push("/");
+                });
             }
         });
     }
 
-
-
-
-
-
-
+    changeHandler = (e) => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+    }
 
     render() {
         const { SubMenu } = Menu;
@@ -77,7 +83,7 @@ class index extends Component {
                         width={350}
                     >
 
-
+                        {/* ------ Log-in Form ------ */}
                         <Form onSubmit={this.handleSubmit} className="login-form">
                             <Form.Item>
                                 {getFieldDecorator('username', {
@@ -86,6 +92,8 @@ class index extends Component {
                                     <Input
                                         prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                         placeholder="Username"
+                                        name="username"
+                                        onChange={this.changeHandler}
                                     />,
                                 )}
                             </Form.Item>
@@ -97,6 +105,8 @@ class index extends Component {
                                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                         type="password"
                                         placeholder="Password"
+                                        name="password"
+                                        onChange={this.changeHandler}
                                     />,
                                 )}
                             </Form.Item>
@@ -105,7 +115,7 @@ class index extends Component {
                                     valuePropName: 'checked',
                                     initialValue: true,
                                 })(<Checkbox>Remember me</Checkbox>)}
-                                <a className="login-form-forgot" href="">
+                                <a className="login-form-forgot" href="http://google.com">
                                     Forgot password
                                     </a><br></br>
                                 <Button type="primary" htmlType="submit" className="login-form-button">
@@ -113,14 +123,6 @@ class index extends Component {
                                     </Button>
                             </Form.Item>
                         </Form>
-
-
-
-
-
-
-
-
 
 
                     </Drawer>
