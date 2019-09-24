@@ -22,7 +22,10 @@ class App extends Component {
     if (token) {
       authenticatedAxios
         .get("/api/me")
-        .then(response => this.setUser(response.data));
+        .then(response => {
+          console.log('****', response)
+          this.setUser(response.data)
+        });
     }
   }
 

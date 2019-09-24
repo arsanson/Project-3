@@ -36,25 +36,25 @@ class index extends Component {
       visible: false
     });
   };
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (err) console.log(err);
-            const { username, password } = values;
-            if (username && password) {
-                Auth.logIn(username, password, (response) => {
-                    this.context.setUser(response);
-                    this.props.history.push("/");
-                });
-            }
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (err) console.log(err);
+      const { username, password } = values;
+      if (username && password) {
+        Auth.logIn(username, password, (response) => {
+          this.context.setUser(response);
+          this.props.history.push("/");
         });
-    }
-    
+      }
+    });
+  }
+
   // Login Form
-    changeHandler = (e) => {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
+  changeHandler = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
 
   // Timer
   handleInputChange = e => {
@@ -69,24 +69,26 @@ class index extends Component {
 
   // Timer
   startTimer = () => {
-    this.setState({timerTime: this.state.min})
-    const intervalIdMin = setInterval(() => {     
-        console.log(this.state.timerTime)
-        if (this.state.timerTime === 0 ) clearInterval(intervalIdMin) 
-        else this.setState({
-            isTimerPaused: false,
-            timerTime: this.state.timerTime - 1})
-    }, 1000*60);
+    this.setState({ timerTime: this.state.min })
+    const intervalIdMin = setInterval(() => {
+      console.log(this.state.timerTime)
+      if (this.state.timerTime === 0) clearInterval(intervalIdMin)
+      else this.setState({
+        isTimerPaused: false,
+        timerTime: this.state.timerTime - 1
+      })
+    }, 1000 * 60);
 
 
 
-    this.setState({timerValue: this.state.seconds})
-    const intervalId = setInterval(() => {     
-        console.log(this.state.timerValue)
-        if (this.state.timerValue === 0 ) clearInterval(intervalId)
-        else this.setState({
-            isTimerPaused: false,
-            timerValue: this.state.timerValue - 1})
+    this.setState({ timerValue: this.state.seconds })
+    const intervalId = setInterval(() => {
+      console.log(this.state.timerValue)
+      if (this.state.timerValue === 0) clearInterval(intervalId)
+      else this.setState({
+        isTimerPaused: false,
+        timerValue: this.state.timerValue - 1
+      })
     }, 1000);
   };
 
@@ -128,7 +130,7 @@ class index extends Component {
   // Clock
 
   render() {
-      if (this.state.time === this.state.alarm) alert('hi')
+    if (this.state.time === this.state.alarm) alert('hi')
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
 
@@ -224,6 +226,7 @@ class index extends Component {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
+                // href="../loggedIn"
                 >
                   Log in
                 </Button>
@@ -267,41 +270,41 @@ class index extends Component {
                           type="clock-circle"
                           theme="twoTone"
                           style={{ color: "rgba(0,0,0,.25)" }}
-                        
+
                         />
                       }
                       placeholder="Hrs"
                       block
                       name="hrs"
                       onChange={this.handleInputChange}
-                      style={{width:"33%"}}
+                      style={{ width: "33%" }}
                     /><Input
-                    prefix={
-                      <Icon
-                        type="clock-circle"
-                        theme="twoTone"
-                        style={{ color: "rgba(0,0,0,.25)" }}
-                      />
-                    }
-                    placeholder="Min"
-                    block
-                    name="min"
-                    onChange={this.handleInputChange}
-                    style={{width:"33%"}}
-                  /><Input
-                  prefix={
-                    <Icon
-                      type="clock-circle"
-                      theme="twoTone"
-                      style={{ color: "rgba(0,0,0,.25)" }}
+                      prefix={
+                        <Icon
+                          type="clock-circle"
+                          theme="twoTone"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      placeholder="Min"
+                      block
+                      name="min"
+                      onChange={this.handleInputChange}
+                      style={{ width: "33%" }}
+                    /><Input
+                      prefix={
+                        <Icon
+                          type="clock-circle"
+                          theme="twoTone"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      placeholder="Sec"
+                      block
+                      name="seconds"
+                      onChange={this.handleInputChange}
+                      style={{ width: "33%" }}
                     />
-                  }
-                  placeholder="Sec"
-                  block
-                  name="seconds"
-                  onChange={this.handleInputChange}
-                  style={{width:"33%"}}
-                />
 
                   </Menu.Item>
                   <Menu.Item key="6">
@@ -332,7 +335,7 @@ class index extends Component {
                       block
                       name="alarm"
                       onChange={this.handleInputChange}
-                     
+
                     />
                   </Menu.Item>
                   <Menu.Item key="6">
@@ -368,16 +371,16 @@ class index extends Component {
                   <div id="timerOuter" className="outer">
                     <div id="timerInner" className="most-inner">
                       <span>
-                      {this.state.timerTime}:
+                        {this.state.timerTime}:
                       {this.state.timerValue}
-                        
+
                       </span>
                     </div>
                   </div>
 
                   <div id="alarmOuter" className="outer">
                     <div id="alarmInner" className="most-inner">
-                        {this.state.alarm}
+                      {this.state.alarm}
                     </div>
                   </div>
 
