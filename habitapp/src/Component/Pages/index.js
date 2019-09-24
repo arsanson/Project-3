@@ -16,9 +16,10 @@ import "../../beforeLogin.css";
 class index extends Component {
   state = {
     visible: false,
-    timerTime: "00",
-    timerValue: "00",
-    alarm: "00",
+    timerTime: "",
+    timerValue: "",
+    hrs: "",
+    alarm: "00:00:00",
     isTimerPaused: true
   };
 
@@ -51,30 +52,62 @@ class index extends Component {
     });
   };
 
-
-
-
   // Timer
   startTimer = () => {
-    this.setState({timerTime: this.state.min})
-    const intervalIdMin = setInterval(() => {     
-        console.log(this.state.timerTime)
-        if (this.state.timerTime === 0 ) clearInterval(intervalIdMin) 
-        else this.setState({
-            isTimerPaused: false,
-            timerTime: this.state.timerTime - 1})
-    }, 1000*60);
+    this.setState({ hrs: this.state.hrs });
 
+    
 
+    // const intervalIdhrs = setInterval(() => {
+    //   console.log(this.state.hrs);
+    //   if (this.state.hrs === 0) clearInterval(intervalIdhrs);
+    //   else
+    //     this.setState({
+    //       isTimerPaused: false,
+    //       hrs: this.state.hrs - 1
+    //     });
+    // }, 1000 * 60 * 60);
 
-    this.setState({timerValue: this.state.seconds})
-    const intervalId = setInterval(() => {     
-        console.log(this.state.timerValue)
-        if (this.state.timerValue === 0 ) clearInterval(intervalId)
-        else this.setState({
-            isTimerPaused: false,
-            timerValue: this.state.timerValue - 1})
+    this.setState({ timerTime: this.state.min });
+    
+    // const intervalIdMin = setInterval(() => {
+    //   console.log(this.state.timerTime);
+    //   if (this.state.timerTime === 0) clearInterval(intervalIdMin);
+    //   else
+    //     this.setState({
+    //       isTimerPaused: false,
+    //       timerTime: this.state.timerTime - 1
+    //     });
+    // }, 1000 * 60);
+
+    this.setState({ timerValue: this.state.seconds });
+    const intervalId = setInterval(() => {
+      console.log(this.state.timerValue);
+      if (this.state.timerValue === 0) {
+        clearInterval(intervalId);
+      } else
+        this.setState({
+          isTimerPaused: false,
+          timerValue: this.state.timerValue - 1
+        });
     }, 1000);
+
+    if (this.state.timerValue === 0 && this.state.timerTime === 0) {
+      this.setState({
+        timerValue: this.state.timerValue === 0,
+        timerTime: this.state.timerTime === 0
+      });
+    } 
+
+    if (this.state.TimerTime===0 && this.state.timerValue===0 && this.state.hrs===1){
+        alert("what")
+        // this.setState({
+        //     timerTime: (this.state.min=60),
+        //     timerTime: (this.state.min-=1),
+        //     hrs: (this.state.hrs===0)
+        // })
+    }
+    
   };
 
   //  Clock
@@ -115,7 +148,27 @@ class index extends Component {
   // Clock
 
   render() {
-      if (this.state.time === this.state.alarm) alert('hi')
+    if (this.state.timerValue === 0 && this.state.timerTime != 0) {
+      this.setState({
+        timerValue: (this.state.timerValue = 60),
+        timerValue: (this.state.timerValue -= 1),
+        timerTime: (this.state.min -= 1)
+      });
+    }
+    //  if (this.state.TimerTime===0 && this.state.timerValue===0 && this.state.hrs===1){
+    //     alert("is it working?")
+    //     this.setState({
+    //         timerTime: (this.state.min=60),
+    //         timerTime: (this.state.min-=1),
+    //         hrs: (this.state.hrs===0)
+    //     })
+    // }
+
+
+    // Alarm Clock Code Below
+    if (this.state.time === this.state.alarm) alert("hi");
+    // Alarm Clock Code Above
+
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
 
@@ -250,42 +303,42 @@ class index extends Component {
                           type="clock-circle"
                           theme="twoTone"
                           style={{ color: "rgba(0,0,0,.25)" }}
-                        
                         />
                       }
                       placeholder="Hrs"
                       block
                       name="hrs"
                       onChange={this.handleInputChange}
-                      style={{width:"33%"}}
-                    /><Input
-                    prefix={
-                      <Icon
-                        type="clock-circle"
-                        theme="twoTone"
-                        style={{ color: "rgba(0,0,0,.25)" }}
-                      />
-                    }
-                    placeholder="Min"
-                    block
-                    name="min"
-                    onChange={this.handleInputChange}
-                    style={{width:"33%"}}
-                  /><Input
-                  prefix={
-                    <Icon
-                      type="clock-circle"
-                      theme="twoTone"
-                      style={{ color: "rgba(0,0,0,.25)" }}
+                      style={{ width: "33%" }}
                     />
-                  }
-                  placeholder="Sec"
-                  block
-                  name="seconds"
-                  onChange={this.handleInputChange}
-                  style={{width:"33%"}}
-                />
-
+                    <Input
+                      prefix={
+                        <Icon
+                          type="clock-circle"
+                          theme="twoTone"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      placeholder="Min"
+                      block
+                      name="min"
+                      onChange={this.handleInputChange}
+                      style={{ width: "33%" }}
+                    />
+                    <Input
+                      prefix={
+                        <Icon
+                          type="clock-circle"
+                          theme="twoTone"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      placeholder="Sec"
+                      block
+                      name="seconds"
+                      onChange={this.handleInputChange}
+                      style={{ width: "33%" }}
+                    />
                   </Menu.Item>
                   <Menu.Item key="6">
                     <Button type="primary" block onClick={this.startTimer}>
@@ -315,7 +368,6 @@ class index extends Component {
                       block
                       name="alarm"
                       onChange={this.handleInputChange}
-                     
                     />
                   </Menu.Item>
                   <Menu.Item key="6">
@@ -337,30 +389,22 @@ class index extends Component {
                 fontSize: "2em"
               }}
             >
-              {/* <ReactCountdownClock
-                seconds={this.state.timerValue}
-                color="#003366"
-                alpha={0.9}
-                size={300}
-                paused={this.state.isTimerPaused}
-                key="countdowntimer"
-              /> */}
-
               <div id="container">
                 <div className="outer">
                   <div id="timerOuter" className="outer">
                     <div id="timerInner" className="most-inner">
                       <span>
-                      {this.state.timerTime}:
-                      {this.state.timerValue}
-                        
+                        <h1>Timer</h1>
+                        {this.state.hrs}:{this.state.timerTime}:
+                        {this.state.timerValue}
                       </span>
                     </div>
                   </div>
 
                   <div id="alarmOuter" className="outer">
                     <div id="alarmInner" className="most-inner">
-                        {this.state.alarm}
+                      <h1>Alarm</h1>
+                      {this.state.alarm}
                     </div>
                   </div>
 
