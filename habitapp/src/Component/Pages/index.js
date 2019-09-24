@@ -12,13 +12,16 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
+import CountdownTimer from "react-component-countdown-timer";
+import "react-component-countdown-timer/lib/styles.css";
 
 class index extends Component {
   state = {
     visible: false,
-    timerTime: "",
-    timerValue: "",
+    totalTime: "",
     hrs: "",
+    min: "",
+    seconds: "",
     alarm: "00:00:00",
     isTimerPaused: true
   };
@@ -47,69 +50,29 @@ class index extends Component {
   // Timer
   handleInputChange = e => {
     const { name, value } = e.target;
+    console.log(name, value)
     this.setState({
       [name]: value
     });
   };
 
-  // Timer
+//   Timer
   startTimer = () => {
-    this.setState({ hrs: this.state.hrs });
-
-    
-
-    // const intervalIdhrs = setInterval(() => {
-    //   console.log(this.state.hrs);
-    //   if (this.state.hrs === 0) clearInterval(intervalIdhrs);
-    //   else
-    //     this.setState({
-    //       isTimerPaused: false,
-    //       hrs: this.state.hrs - 1
-    //     });
-    // }, 1000 * 60 * 60);
-
-    this.setState({ timerTime: this.state.min });
-    
-    // const intervalIdMin = setInterval(() => {
-    //   console.log(this.state.timerTime);
-    //   if (this.state.timerTime === 0) clearInterval(intervalIdMin);
-    //   else
-    //     this.setState({
-    //       isTimerPaused: false,
-    //       timerTime: this.state.timerTime - 1
-    //     });
-    // }, 1000 * 60);
-
-    this.setState({ timerValue: this.state.seconds });
-    const intervalId = setInterval(() => {
-      console.log(this.state.timerValue);
-      if (this.state.timerValue === 0) {
-        clearInterval(intervalId);
-      } else
-        this.setState({
-          isTimerPaused: false,
-          timerValue: this.state.timerValue - 1
-        });
-    }, 1000);
-
-    if (this.state.timerValue === 0 && this.state.timerTime === 0) {
-      this.setState({
-        timerValue: this.state.timerValue === 0,
-        timerTime: this.state.timerTime === 0
-      });
-    } 
-
-    if (this.state.TimerTime===0 && this.state.timerValue===0 && this.state.hrs===1){
-        alert("what")
-        // this.setState({
-        //     timerTime: (this.state.min=60),
-        //     timerTime: (this.state.min-=1),
-        //     hrs: (this.state.hrs===0)
-        // })
-    }
+      
+    this.setState({
+        totalTime: (parseInt(this.state.min)*60)+(parseInt(this.state.hrs)*3600)+parseInt(this.state.seconds)
+    })
     
   };
 
+
+  timesUp = () => {
+      if(this.state.totalTime===0){
+          alert("times up")
+      }
+  }
+
+  
   //  Clock
 
   getInitialState = () => {
@@ -120,7 +83,7 @@ class index extends Component {
   };
 
   componentDidMount = () => {
-    this.loadInterval = setInterval(this.getTime, 1000);
+    setInterval(this.getTime, 1000);
   };
 
   getTime = () => {
@@ -147,23 +110,9 @@ class index extends Component {
 
   // Clock
 
-  render() {
-    if (this.state.timerValue === 0 && this.state.timerTime != 0) {
-      this.setState({
-        timerValue: (this.state.timerValue = 60),
-        timerValue: (this.state.timerValue -= 1),
-        timerTime: (this.state.min -= 1)
-      });
-    }
-    //  if (this.state.TimerTime===0 && this.state.timerValue===0 && this.state.hrs===1){
-    //     alert("is it working?")
-    //     this.setState({
-    //         timerTime: (this.state.min=60),
-    //         timerTime: (this.state.min-=1),
-    //         hrs: (this.state.hrs===0)
-    //     })
-    // }
 
+  
+  render() {
 
     // Alarm Clock Code Below
     if (this.state.time === this.state.alarm) alert("hi");
@@ -395,8 +344,9 @@ class index extends Component {
                     <div id="timerInner" className="most-inner">
                       <span>
                         <h1>Timer</h1>
-                        {this.state.hrs}:{this.state.timerTime}:
-                        {this.state.timerValue}
+                        {!this.state.totalTime && <CountdownTimer count={0} hideDay />}
+                        {this.state.totalTime && <CountdownTimer count={this.state.totalTime} hideDay/>}
+                        {this.timesUp}
                       </span>
                     </div>
                   </div>
