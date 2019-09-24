@@ -12,9 +12,6 @@
 // Use a config file to hide your client id and client secret.
 // Put the config.js file in your .gitignore.
 // import config from '../../utils/config';
-
-import axios from "axios";
-
 const client_id = '7f488723efa14e2bba1383bde79e3571';
 const client_secret = '4d002b591c51451ab2221cb6c2358973';
 const base64 = btoa(`${client_id}:${client_secret}`);
@@ -42,7 +39,7 @@ console.log(base64);
 console.log(authOptions);
 
 
-axios.post(authOptions, function (error, response, body) {
+request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
         // use the access token to access the Spotify Web API
         var token = body.access_token;
@@ -53,13 +50,9 @@ axios.post(authOptions, function (error, response, body) {
             },
             json: true
         };
-        axios.get(options, function (error, response, body) {
+        request.get(options, function (error, response, body) {
             console.log(body);
         });
     }
 });
-Collapse
 
-
-
-new messages

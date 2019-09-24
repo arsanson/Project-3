@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
 const User = require("../models/User");
+const spotifyRequest = require("./spotify")
 require('dotenv').config()
 
 module.exports = function (app) {
@@ -56,4 +57,9 @@ module.exports = function (app) {
             }
         });
     });
+
+    app.post("/api/playlist", function (req, res) {
+
+    })
+
 }

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 3001;
 
+
 //Define middleware here 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
