@@ -7,6 +7,14 @@ import { List } from 'antd';
 
 export default () => {
 
+
+    var objDate = new Date();
+
+    var strDate =
+        objDate.toLocaleString("en", { month: "long" }) + ' ' +
+        objDate.toLocaleString("en", { day: "numeric" }) + ', ' +
+        objDate.toLocaleString("en", { year: "numeric" });
+
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
     const data = [
@@ -69,7 +77,7 @@ export default () => {
                                 <Menu.Item key="1" >
                                     <span>
                                         <Icon type="schedule" />
-                                        September 18, 2019
+                                        {strDate}
                                     </span>
                                 </Menu.Item>
                             </Menu>
@@ -104,19 +112,19 @@ export default () => {
                         <Layout style={{ position: "absolute", maxHeight: 150 }}></Layout>
                         <Calendar fullscreen={false} onPanelChange={onPanelChange}
                         /></div>
-                   
+
                     <Content style={{ padding: '0 24px', minHeight: 280, textAlign: 'center', fontSize: '2em' }}>
-                    <div>
-                        <h3 style={{ margin: '16px 0' }}>Todo List</h3>
-                        <List
-                            size="large"
-                            header={<div>Header</div>}
-                            footer={<div>Footer</div>}
-                            bordered
-                            dataSource={data}
-                            renderItem={item => <List.Item>{item}</List.Item>}
-                        />
-                    </div>,
+                        <div>
+                            <h3 style={{ margin: '16px 0' }}>Todo List</h3>
+                            <List
+                                size="large"
+                                header={<div>Header</div>}
+                                footer={<div>Footer</div>}
+                                bordered
+                                dataSource={data}
+                                renderItem={item => <List.Item>{item}</List.Item>}
+                            />
+                        </div>,
         </Content>
                 </Layout>
 
@@ -131,4 +139,4 @@ export default () => {
             <Footer style={{ textAlign: 'center' }}>Copyright © 2019 Gatech Bootcamp Project 3</Footer>
         </Layout >
     )
-} 
+}
