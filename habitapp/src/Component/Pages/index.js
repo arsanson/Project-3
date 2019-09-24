@@ -12,6 +12,7 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
+import Auth from "../../utils/Auth";
 
 class index extends Component {
   state = {
@@ -19,7 +20,9 @@ class index extends Component {
     timerTime: "00",
     timerValue: "00",
     alarm: "00",
-    isTimerPaused: true
+    isTimerPaused: true,
+    username: '',
+    password: ''
   };
 
   showDrawer = () => {
@@ -33,15 +36,25 @@ class index extends Component {
       visible: false
     });
   };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (err) console.log(err);
+            const { username, password } = values;
+            if (username && password) {
+                Auth.logIn(username, password, (response) => {
+                    this.context.setUser(response);
+                    this.props.history.push("/");
+                });
+            }
+        });
+    }
+    
+  // Login Form
+    changeHandler = (e) => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+    }
 
   // Timer
   handleInputChange = e => {
@@ -176,6 +189,8 @@ class index extends Component {
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
                     placeholder="Username"
+                    name="username"
+                    onChange={this.changeHandler}
                   />
                 )}
               </Form.Item>
@@ -191,6 +206,8 @@ class index extends Component {
                     }
                     type="password"
                     placeholder="Password"
+                    name="password"
+                    onChange={this.changeHandler}
                   />
                 )}
               </Form.Item>
