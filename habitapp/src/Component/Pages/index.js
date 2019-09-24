@@ -12,17 +12,25 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
+
+import CountdownTimer from "react-component-countdown-timer";
+import "react-component-countdown-timer/lib/styles.css";
+
 import Auth from "../../utils/Auth";
+
 
 class index extends Component {
   state = {
     visible: false,
-    timerTime: "00",
-    timerValue: "00",
-    alarm: "00",
-    isTimerPaused: true,
-    username: '',
-    password: ''
+
+    totalTime: "",
+    hrs: "",
+    min: "",
+    seconds: "",
+    alarm: "00:00:00",
+    isTimerPaused: true
+
+
   };
 
   showDrawer = () => {
@@ -59,39 +67,30 @@ class index extends Component {
   // Timer
   handleInputChange = e => {
     const { name, value } = e.target;
+    console.log(name, value)
     this.setState({
       [name]: value
     });
   };
 
-
-
-
-  // Timer
+//   Timer
   startTimer = () => {
-    this.setState({ timerTime: this.state.min })
-    const intervalIdMin = setInterval(() => {
-      console.log(this.state.timerTime)
-      if (this.state.timerTime === 0) clearInterval(intervalIdMin)
-      else this.setState({
-        isTimerPaused: false,
-        timerTime: this.state.timerTime - 1
-      })
-    }, 1000 * 60);
 
-
-
-    this.setState({ timerValue: this.state.seconds })
-    const intervalId = setInterval(() => {
-      console.log(this.state.timerValue)
-      if (this.state.timerValue === 0) clearInterval(intervalId)
-      else this.setState({
-        isTimerPaused: false,
-        timerValue: this.state.timerValue - 1
-      })
-    }, 1000);
+      
+    this.setState({
+        totalTime: (parseInt(this.state.min)*60)+(parseInt(this.state.hrs)*3600)+parseInt(this.state.seconds)
+    })
+    
   };
 
+
+  timesUp = () => {
+      if(this.state.totalTime===0){
+          alert("times up")
+      }
+  }
+
+  
   //  Clock
 
   getInitialState = () => {
@@ -102,7 +101,7 @@ class index extends Component {
   };
 
   componentDidMount = () => {
-    this.loadInterval = setInterval(this.getTime, 1000);
+    setInterval(this.getTime, 1000);
   };
 
   getTime = () => {
@@ -129,8 +128,17 @@ class index extends Component {
 
   // Clock
 
+
+  
   render() {
-    if (this.state.time === this.state.alarm) alert('hi')
+
+
+    // Alarm Clock Code Below
+    if (this.state.time === this.state.alarm) alert("hi");
+    // Alarm Clock Code Above
+
+
+
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
 
@@ -278,7 +286,12 @@ class index extends Component {
                       name="hrs"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
-                    /><Input
+
+                    />
+                    <Input
+
+                  
+
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -291,7 +304,12 @@ class index extends Component {
                       name="min"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
-                    /><Input
+
+                    />
+                    <Input
+
+              
+
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -357,22 +375,19 @@ class index extends Component {
                 fontSize: "2em"
               }}
             >
-              {/* <ReactCountdownClock
-                seconds={this.state.timerValue}
-                color="#003366"
-                alpha={0.9}
-                size={300}
-                paused={this.state.isTimerPaused}
-                key="countdowntimer"
-              /> */}
-
               <div id="container">
                 <div className="outer">
                   <div id="timerOuter" className="outer">
                     <div id="timerInner" className="most-inner">
                       <span>
-                        {this.state.timerTime}:
-                      {this.state.timerValue}
+
+                        <h1>Timer</h1>
+                        {!this.state.totalTime && <CountdownTimer count={0} hideDay />}
+                        {this.state.totalTime && <CountdownTimer count={this.state.totalTime} hideDay/>}
+                        {this.timesUp}
+
+                
+
 
                       </span>
                     </div>
@@ -380,6 +395,9 @@ class index extends Component {
 
                   <div id="alarmOuter" className="outer">
                     <div id="alarmInner" className="most-inner">
+
+                      <h1>Alarm</h1>
+
                       {this.state.alarm}
                     </div>
                   </div>
