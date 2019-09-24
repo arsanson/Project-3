@@ -12,18 +12,25 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
+
 import CountdownTimer from "react-component-countdown-timer";
 import "react-component-countdown-timer/lib/styles.css";
+
+import Auth from "../../utils/Auth";
+
 
 class index extends Component {
   state = {
     visible: false,
+
     totalTime: "",
     hrs: "",
     min: "",
     seconds: "",
     alarm: "00:00:00",
     isTimerPaused: true
+
+
   };
 
   showDrawer = () => {
@@ -37,15 +44,25 @@ class index extends Component {
       visible: false
     });
   };
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
+      if (err) console.log(err);
+      const { username, password } = values;
+      if (username && password) {
+        Auth.logIn(username, password, (response) => {
+          this.context.setUser(response);
+          this.props.history.push("/");
+        });
       }
     });
-  };
+  }
+
+  // Login Form
+  changeHandler = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
 
   // Timer
   handleInputChange = e => {
@@ -58,6 +75,7 @@ class index extends Component {
 
 //   Timer
   startTimer = () => {
+
       
     this.setState({
         totalTime: (parseInt(this.state.min)*60)+(parseInt(this.state.hrs)*3600)+parseInt(this.state.seconds)
@@ -114,9 +132,12 @@ class index extends Component {
   
   render() {
 
+
     // Alarm Clock Code Below
     if (this.state.time === this.state.alarm) alert("hi");
     // Alarm Clock Code Above
+
+
 
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
@@ -178,6 +199,8 @@ class index extends Component {
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
                     placeholder="Username"
+                    name="username"
+                    onChange={this.changeHandler}
                   />
                 )}
               </Form.Item>
@@ -193,6 +216,8 @@ class index extends Component {
                     }
                     type="password"
                     placeholder="Password"
+                    name="password"
+                    onChange={this.changeHandler}
                   />
                 )}
               </Form.Item>
@@ -209,6 +234,7 @@ class index extends Component {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
+                // href="../loggedIn"
                 >
                   Log in
                 </Button>
@@ -252,6 +278,7 @@ class index extends Component {
                           type="clock-circle"
                           theme="twoTone"
                           style={{ color: "rgba(0,0,0,.25)" }}
+
                         />
                       }
                       placeholder="Hrs"
@@ -259,8 +286,12 @@ class index extends Component {
                       name="hrs"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
+
                     />
                     <Input
+
+                  
+
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -273,8 +304,12 @@ class index extends Component {
                       name="min"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
+
                     />
                     <Input
+
+              
+
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -288,6 +323,7 @@ class index extends Component {
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
                     />
+
                   </Menu.Item>
                   <Menu.Item key="6">
                     <Button type="primary" block onClick={this.startTimer}>
@@ -317,6 +353,7 @@ class index extends Component {
                       block
                       name="alarm"
                       onChange={this.handleInputChange}
+
                     />
                   </Menu.Item>
                   <Menu.Item key="6">
@@ -343,17 +380,24 @@ class index extends Component {
                   <div id="timerOuter" className="outer">
                     <div id="timerInner" className="most-inner">
                       <span>
+
                         <h1>Timer</h1>
                         {!this.state.totalTime && <CountdownTimer count={0} hideDay />}
                         {this.state.totalTime && <CountdownTimer count={this.state.totalTime} hideDay/>}
                         {this.timesUp}
+
+                
+
+
                       </span>
                     </div>
                   </div>
 
                   <div id="alarmOuter" className="outer">
                     <div id="alarmInner" className="most-inner">
+
                       <h1>Alarm</h1>
+
                       {this.state.alarm}
                     </div>
                   </div>

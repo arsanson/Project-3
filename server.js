@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const routes = require("./routes");
 const app = express();
-const port = 3000;
+const port = 3001;
+
 
 //Define middleware here 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+require("./routes/api-routes.js")(app);
 
 //Serve up static assets(usually on heroku)
 
@@ -15,7 +17,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //add routes, both API and view
-app.use(routes);
 app.get('/', (req, res) => res.send('Hello World!'))
 
 // Route for retrieving all Users from the db
@@ -33,7 +34,7 @@ app.get("/user", function (req, res) {
 });
 
 //Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || 3000);
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb', { useNewUrlParser: true });
 
 
 // start the server
