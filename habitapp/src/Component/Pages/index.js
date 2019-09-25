@@ -21,6 +21,9 @@ import "react-component-countdown-timer/lib/styles.css";
 import AudioPlayer from "react-h5-audio-player";
 
 import Auth from "../../utils/Auth";
+
+import API from "../../utils/API";
+
 const { Option } = Select;
 class index extends Component {
   state = {
@@ -63,9 +66,9 @@ class index extends Component {
       const { username, password } = values;
       if (username && password) {
         Auth.logIn(username, password, response => {
-          this.context.setUser(response);
+          // this.context.setUser(response);
           this.props.history.push("/");
-        });
+        }).then(() => API.spotify().then(res => console.log("res", res)));
       }
     });
   };
