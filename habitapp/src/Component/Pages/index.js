@@ -8,7 +8,10 @@ import {
   Form,
   Input,
   Button,
-  Checkbox
+  Checkbox,
+  Row,
+  Col,
+  Select
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
@@ -18,24 +21,27 @@ import "react-component-countdown-timer/lib/styles.css";
 
 import Auth from "../../utils/Auth";
 
-
+const { Option } = Select;
 class index extends Component {
   state = {
     visible: false,
-
+    show: false,
     totalTime: "",
     hrs: "",
     min: "",
     seconds: "",
     alarm: "00:00:00",
     isTimerPaused: true
-
-
   };
 
   showDrawer = () => {
     this.setState({
       visible: true
+    });
+  };
+  accountDrawer = () => {
+    this.setState({
+      show: true
     });
   };
 
@@ -44,53 +50,56 @@ class index extends Component {
       visible: false
     });
   };
+  onClose = () => {
+    this.setState({
+      show: false
+    });
+  };
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (err) console.log(err);
       const { username, password } = values;
       if (username && password) {
-        Auth.logIn(username, password, (response) => {
+        Auth.logIn(username, password, response => {
           this.context.setUser(response);
           this.props.history.push("/");
         });
       }
     });
-  }
+  };
 
   // Login Form
-  changeHandler = (e) => {
+  changeHandler = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   // Timer
   handleInputChange = e => {
     const { name, value } = e.target;
-    console.log(name, value)
+    console.log(name, value);
     this.setState({
       [name]: value
     });
   };
 
-//   Timer
+  //   Timer
   startTimer = () => {
-
-      
     this.setState({
-        totalTime: (parseInt(this.state.min)*60)+(parseInt(this.state.hrs)*3600)+parseInt(this.state.seconds)
-    })
-    
+      totalTime:
+        parseInt(this.state.min) * 60 +
+        parseInt(this.state.hrs) * 3600 +
+        parseInt(this.state.seconds)
+    });
   };
 
-
   timesUp = () => {
-      if(this.state.totalTime===0){
-          alert("times up")
-      }
-  }
+    if (this.state.totalTime === 0) {
+      alert("times up");
+    }
+  };
 
-  
   //  Clock
 
   getInitialState = () => {
@@ -128,16 +137,10 @@ class index extends Component {
 
   // Clock
 
-
-  
   render() {
-
-
     // Alarm Clock Code Below
     if (this.state.time === this.state.alarm) alert("hi");
     // Alarm Clock Code Above
-
-
 
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
@@ -167,7 +170,9 @@ class index extends Component {
               Login
             </Menu.Item>
 
-            <Menu.Item key="2">Create Account</Menu.Item>
+            <Menu.Item key="2" onClick={this.accountDrawer}>
+              Create Account
+            </Menu.Item>
             <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
               <Icon type="play-circle" theme="twoTone" />
             </Menu.Item>
@@ -181,7 +186,7 @@ class index extends Component {
           <Drawer
             title="Login"
             placement="left"
-            closable={false}
+            closable={true}
             onClose={this.onClose}
             visible={this.state.visible}
             width={350}
@@ -234,7 +239,7 @@ class index extends Component {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                // href="../loggedIn"
+                  // href="../loggedIn"
                 >
                   Log in
                 </Button>
@@ -244,6 +249,115 @@ class index extends Component {
 
             {/* Sidebar Date/Time Set----------------------------------------------------------------------------------------------- */}
           </Drawer>
+          <div>
+            {/* <Button type="primary" onClick={this.accountDrawer}>
+                <Icon type="plus" /> Create Account
+              </Button> */}
+
+            <Drawer
+              title="Create a new account"
+              width={720}
+              onClose={this.onClose}
+              visible={this.state.show}
+              placement="left"
+              closable={true}
+              width={450}
+            >
+              <Form layout="vertical" hideRequiredMark>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Name">
+                      {getFieldDecorator("name", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter user name"
+                          }
+                        ]
+                      })(<Input placeholder="Please enter user name" />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Password">
+                      {getFieldDecorator("password", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter a password"
+                          }
+                        ]
+                      })(
+                        <Input
+                          style={{ width: "100%" }}
+                          placeholder="Please enter a password"
+                        />
+                      )}
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Genre">
+                      {getFieldDecorator("Genre", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please choose the Genres"
+                          }
+                        ]
+                      })(
+                        <Select placeholder="Please choose the type">
+                          <Option value="Hip-Hop">Hip-Hop</Option>
+                          <Option value="Rap">Rap</Option>
+                          <Option value="Pop">Pop</Option>
+                          <Option value="Study">Study</Option>
+                          <Option value="Classical">Classical</Option>
+                          <Option value="Bag Pipes">Bag Pipes</Option>
+                        </Select>
+                      )}
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={24}>
+                    <Form.Item label="Description">
+                      {getFieldDecorator("description", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "please enter url description"
+                          }
+                        ]
+                      })(
+                        <Input.TextArea
+                          rows={1}
+                          placeholder="please enter your habits you would like to start tracking"
+                        />
+                      )}
+                      <Button type="primary">Add</Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  bottom: 0,
+                  width: "100%",
+                  borderTop: "1px solid #e9e9e9",
+                  padding: "10px 16px",
+                  background: "#fff",
+                  textAlign: "right"
+                }}
+              >
+                <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+                  Cancel
+                </Button>
+                <Button onClick={this.onClose} type="primary">
+                  Submit
+                </Button>
+              </div>
+            </Drawer>
+          </div>
           <Layout
             style={{ height: "100%", padding: "24px 0", background: "#fff" }}
           >
@@ -278,7 +392,6 @@ class index extends Component {
                           type="clock-circle"
                           theme="twoTone"
                           style={{ color: "rgba(0,0,0,.25)" }}
-
                         />
                       }
                       placeholder="Hrs"
@@ -286,12 +399,8 @@ class index extends Component {
                       name="hrs"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
-
                     />
                     <Input
-
-                  
-
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -304,12 +413,8 @@ class index extends Component {
                       name="min"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
-
                     />
                     <Input
-
-              
-
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -323,7 +428,6 @@ class index extends Component {
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
                     />
-
                   </Menu.Item>
                   <Menu.Item key="6">
                     <Button type="primary" block onClick={this.startTimer}>
@@ -353,7 +457,6 @@ class index extends Component {
                       block
                       name="alarm"
                       onChange={this.handleInputChange}
-
                     />
                   </Menu.Item>
                   <Menu.Item key="6">
@@ -380,22 +483,23 @@ class index extends Component {
                   <div id="timerOuter" className="outer">
                     <div id="timerInner" className="most-inner">
                       <span>
-
                         <h1>Timer</h1>
-                        {!this.state.totalTime && <CountdownTimer count={0} hideDay />}
-                        {this.state.totalTime && <CountdownTimer count={this.state.totalTime} hideDay/>}
+                        {!this.state.totalTime && (
+                          <CountdownTimer count={0} hideDay />
+                        )}
+                        {this.state.totalTime && (
+                          <CountdownTimer
+                            count={this.state.totalTime}
+                            hideDay
+                          />
+                        )}
                         {this.timesUp}
-
-                
-
-
                       </span>
                     </div>
                   </div>
 
                   <div id="alarmOuter" className="outer">
                     <div id="alarmInner" className="most-inner">
-
                       <h1>Alarm</h1>
 
                       {this.state.alarm}
