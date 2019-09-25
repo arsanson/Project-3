@@ -174,7 +174,7 @@ body {
   
   .time {
     color: white;
-    font-size: 70px;
+    font-size: 2em;
     position: relative;
     display: block;
     margin-top: 45px;
@@ -218,3 +218,16 @@ body {
     animation: blinking .5s infinite
   }
   
+
+
+  .ant-layout-header{
+    height: 70px! important;
+  }
+
+.audio-info{
+  height: 30px;
+}
+
+.flex{
+  background-color: #001529! important;
+}
