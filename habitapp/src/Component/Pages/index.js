@@ -15,9 +15,9 @@ import "../../beforeLogin.css";
 
 import CountdownTimer from "react-component-countdown-timer";
 import "react-component-countdown-timer/lib/styles.css";
+import AudioPlayer from "react-h5-audio-player";
 
 import Auth from "../../utils/Auth";
-
 
 class index extends Component {
   state = {
@@ -29,8 +29,6 @@ class index extends Component {
     seconds: "",
     alarm: "00:00:00",
     isTimerPaused: true
-
-
   };
 
   showDrawer = () => {
@@ -50,47 +48,45 @@ class index extends Component {
       if (err) console.log(err);
       const { username, password } = values;
       if (username && password) {
-        Auth.logIn(username, password, (response) => {
+        Auth.logIn(username, password, response => {
           this.context.setUser(response);
           this.props.history.push("/");
         });
       }
     });
-  }
+  };
 
   // Login Form
-  changeHandler = (e) => {
+  changeHandler = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   // Timer
   handleInputChange = e => {
     const { name, value } = e.target;
-    console.log(name, value)
+    console.log(name, value);
     this.setState({
       [name]: value
     });
   };
 
-//   Timer
+  //   Timer
   startTimer = () => {
-
-      
     this.setState({
-        totalTime: (parseInt(this.state.min)*60)+(parseInt(this.state.hrs)*3600)+parseInt(this.state.seconds)
-    })
-    
+      totalTime:
+        parseInt(this.state.min) * 60 +
+        parseInt(this.state.hrs) * 3600 +
+        parseInt(this.state.seconds)
+    });
   };
 
-
   timesUp = () => {
-      if(this.state.totalTime===0){
-          alert("times up")
-      }
-  }
+    if (this.state.totalTime === 0) {
+      alert("times up");
+    }
+  };
 
-  
   //  Clock
 
   getInitialState = () => {
@@ -128,16 +124,10 @@ class index extends Component {
 
   // Clock
 
-
-  
   render() {
-
-
     // Alarm Clock Code Below
     if (this.state.time === this.state.alarm) alert("hi");
     // Alarm Clock Code Above
-
-
 
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
@@ -168,12 +158,22 @@ class index extends Component {
             </Menu.Item>
 
             <Menu.Item key="2">Create Account</Menu.Item>
-            <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
+            <Menu.Item key="3" style={{ position: "absolute", left: "39%", width: "600px" }}>
+        
+              <AudioPlayer
+                autoPlay
+                src="http://example.com/audio.mp3"
+                onPlay={e => console.log("onPlay")}
+                // other props here
+              />
+            
+            </Menu.Item>
+            {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
               <Icon type="play-circle" theme="twoTone" />
             </Menu.Item>
             <Menu.Item key="4" style={{ position: "absolute", left: "52%" }}>
               <Icon type="pause-circle" theme="twoTone" />
-            </Menu.Item>
+            </Menu.Item> */}
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>
@@ -234,7 +234,7 @@ class index extends Component {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                // href="../loggedIn"
+                  // href="../loggedIn"
                 >
                   Log in
                 </Button>
@@ -278,7 +278,6 @@ class index extends Component {
                           type="clock-circle"
                           theme="twoTone"
                           style={{ color: "rgba(0,0,0,.25)" }}
-
                         />
                       }
                       placeholder="Hrs"
@@ -286,12 +285,8 @@ class index extends Component {
                       name="hrs"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
-
                     />
                     <Input
-
-                  
-
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -304,12 +299,8 @@ class index extends Component {
                       name="min"
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
-
                     />
                     <Input
-
-              
-
                       prefix={
                         <Icon
                           type="clock-circle"
@@ -323,7 +314,6 @@ class index extends Component {
                       onChange={this.handleInputChange}
                       style={{ width: "33%" }}
                     />
-
                   </Menu.Item>
                   <Menu.Item key="6">
                     <Button type="primary" block onClick={this.startTimer}>
@@ -353,7 +343,6 @@ class index extends Component {
                       block
                       name="alarm"
                       onChange={this.handleInputChange}
-
                     />
                   </Menu.Item>
                   <Menu.Item key="6">
@@ -380,22 +369,23 @@ class index extends Component {
                   <div id="timerOuter" className="outer">
                     <div id="timerInner" className="most-inner">
                       <span>
-
                         <h1>Timer</h1>
-                        {!this.state.totalTime && <CountdownTimer count={0} hideDay />}
-                        {this.state.totalTime && <CountdownTimer count={this.state.totalTime} hideDay/>}
+                        {!this.state.totalTime && (
+                          <CountdownTimer count={0} hideDay />
+                        )}
+                        {this.state.totalTime && (
+                          <CountdownTimer
+                            count={this.state.totalTime}
+                            hideDay
+                          />
+                        )}
                         {this.timesUp}
-
-                
-
-
                       </span>
                     </div>
                   </div>
 
                   <div id="alarmOuter" className="outer">
                     <div id="alarmInner" className="most-inner">
-
                       <h1>Alarm</h1>
 
                       {this.state.alarm}
