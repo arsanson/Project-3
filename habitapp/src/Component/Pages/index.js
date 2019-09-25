@@ -68,7 +68,9 @@ class index extends Component {
         Auth.logIn(username, password, response => {
           // this.context.setUser(response);
           this.props.history.push("/");
-        }).then(() => API.spotify().then(res => console.log("res", res)));
+        }).then(() =>
+          API.spotify().then(res => console.log("res", res, res[0].uri))
+        );
       }
     });
   };
