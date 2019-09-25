@@ -16,9 +16,6 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
 
-//add routes, both API and view
-app.get('/', (req, res) => res.send('Hello World!'))
-
 // Route for retrieving all Users from the db
 app.get("/user", function (req, res) {
     // Find all Users
@@ -32,6 +29,8 @@ app.get("/user", function (req, res) {
             res.json(err);
         });
 });
+
+//Route 
 
 //Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb', { useNewUrlParser: true });

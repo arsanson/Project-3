@@ -2,5 +2,6 @@
 
 module.exports = {
     User: require("./User"),
+    TodoList: require("./Todolist")
 
 };

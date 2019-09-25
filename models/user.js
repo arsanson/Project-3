@@ -23,31 +23,6 @@ const UserSchema = new Schema({
             "Password should be longer."
         ]
     }
-    // spotify: {
-    //     username: {
-    //         type: String,
-    //         trim: true,
-    //         required: true
-    //     },
-    //     password: {
-    //         type: String,
-    //         trim: true,
-    //         required: true
-    //     }
-    // },
-    // todos: { type: Array },
-    // name: {
-    //     type: String,
-    //     trim: true
-    // },
-    // email: {
-    //     type: String,
-    //     unique: true,
-    //     match: [/.+@.+\..+/, "Please enter a valid e-mail address"]
-    // },
-    // genre: { type: String }
-
-
 });
 
 UserSchema.methods.comparePassword = function (inputPass) {

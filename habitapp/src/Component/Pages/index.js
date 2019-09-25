@@ -18,9 +18,9 @@ import "../../beforeLogin.css";
 
 import CountdownTimer from "react-component-countdown-timer";
 import "react-component-countdown-timer/lib/styles.css";
+import AudioPlayer from "react-h5-audio-player";
 
 import Auth from "../../utils/Auth";
-
 const { Option } = Select;
 class index extends Component {
   state = {
@@ -173,12 +173,24 @@ class index extends Component {
             <Menu.Item key="2" onClick={this.accountDrawer}>
               Create Account
             </Menu.Item>
-            <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
+
+            <Menu.Item
+              key="3"
+              style={{ position: "absolute", left: "39%", width: "600px" }}
+            >
+              <AudioPlayer
+                autoPlay
+                src="http://example.com/audio.mp3"
+                onPlay={e => console.log("onPlay")}
+                // other props here
+              />
+            </Menu.Item>
+            {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
               <Icon type="play-circle" theme="twoTone" />
             </Menu.Item>
             <Menu.Item key="4" style={{ position: "absolute", left: "52%" }}>
               <Icon type="pause-circle" theme="twoTone" />
-            </Menu.Item>
+            </Menu.Item> */}
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>
