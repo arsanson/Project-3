@@ -8,12 +8,13 @@
  */
 
 var request = require('request'); // "Request" library
+require('dotenv').config()
 
 // Use a config file to hide your client id and client secret.
 // Put the config.js file in your .gitignore.
 // import config from '../../utils/config';
-const client_id = '7f488723efa14e2bba1383bde79e3571';
-const client_secret = '4d002b591c51451ab2221cb6c2358973';
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
 const base64 = new Buffer(client_id + ':' + client_secret).toString('base64');
 
 /* 
@@ -38,7 +39,7 @@ var authOptions = {
     json: true
 };
 
-module.exports =
+module.exports = function (req, res) {
     request.post(authOptions, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             // use the access token to access the Spotify Web API
@@ -56,4 +57,5 @@ module.exports =
             });
         }
     });
+}
 
