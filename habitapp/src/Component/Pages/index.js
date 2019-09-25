@@ -53,7 +53,7 @@ class index extends Component {
   onClose = () => {
     this.setState({
       show: false,
-      visible:false
+      visible: false
     });
   };
   handleSubmit = e => {
@@ -179,12 +179,20 @@ class index extends Component {
               key="3"
               style={{ position: "absolute", left: "39%", width: "600px" }}
             >
-              <AudioPlayer
+              <iframe
+                src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
+                width="600"
+                height="70"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+              ></iframe>
+              {/* <AudioPlayer
                 autoPlay
                 src="http://example.com/audio.mp3"
                 onPlay={e => console.log("onPlay")}
                 // other props here
-              />
+              /> */}
             </Menu.Item>
             {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
               <Icon type="play-circle" theme="twoTone" />
