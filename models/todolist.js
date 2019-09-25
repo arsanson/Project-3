@@ -5,12 +5,12 @@ const Schema = mongoose.Schema;
 
 const TodolistSchema = new Schema({
 
-    Item: {
+    item: {
         type: String
     },
 
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
+    userId: {
+        type: String,
         ref: 'User'
     }
 })
@@ -18,7 +18,7 @@ const TodolistSchema = new Schema({
 
 //This creates our model from the above schema, using mongoose model method
 
-const User = mongoose.model("TodoList", TodolistSchema);
+const TodoList = mongoose.model("TodoList", TodolistSchema);
 
 //Export the Todos model
 
