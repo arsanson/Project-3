@@ -389,7 +389,7 @@ class index extends Component {
                 defaultOpenKeys={["sub1"]}
                 style={{ height: "100%" }}
               >
-                <Menu>
+                <Menu style={{ background: "#fff" }}>
                   <Menu.Item key="1">
                     <span>
                       <Icon type="schedule" />
