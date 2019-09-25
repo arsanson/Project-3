@@ -58,8 +58,6 @@ module.exports = function (app) {
         });
     });
 
-    app.post("/api/playlist", function (req, res) {
-
-    })
+    app.post("/api/playlist", spotifyRequest)
 
 }
