@@ -44,8 +44,8 @@ class App extends Component {
               setUser: setUser
             }}
           >
-            <ProtectedRoute exact path="/" component={BeforeLogin} />
-            <Route exact path="/login" component={LoggedIn} />
+            <ProtectedRoute exact path="/login" component={LoggedIn} />
+            <Route exact path="/" component={BeforeLogin} />
           </UserContext.Provider>
         </div>
       </Router>
