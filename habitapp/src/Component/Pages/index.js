@@ -52,7 +52,8 @@ class index extends Component {
   };
   onClose = () => {
     this.setState({
-      show: false
+      show: false,
+      visible:false
     });
   };
   handleSubmit = e => {
