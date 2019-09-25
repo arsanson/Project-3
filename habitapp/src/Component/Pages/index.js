@@ -19,6 +19,8 @@ import AudioPlayer from "react-h5-audio-player";
 
 import Auth from "../../utils/Auth";
 
+import API from "../../utils/API";
+
 class index extends Component {
   state = {
     visible: false,
@@ -49,9 +51,9 @@ class index extends Component {
       const { username, password } = values;
       if (username && password) {
         Auth.logIn(username, password, response => {
-          this.context.setUser(response);
+          // this.context.setUser(response);
           this.props.history.push("/");
-        });
+        }).then(() => API.spotify().then(res => console.log("res", res)));
       }
     });
   };
@@ -158,15 +160,16 @@ class index extends Component {
             </Menu.Item>
 
             <Menu.Item key="2">Create Account</Menu.Item>
-            <Menu.Item key="3" style={{ position: "absolute", left: "39%", width: "600px" }}>
-        
+            <Menu.Item
+              key="3"
+              style={{ position: "absolute", left: "39%", width: "600px" }}
+            >
               <AudioPlayer
                 autoPlay
                 src="http://example.com/audio.mp3"
                 onPlay={e => console.log("onPlay")}
                 // other props here
               />
-            
             </Menu.Item>
             {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
               <Icon type="play-circle" theme="twoTone" />
