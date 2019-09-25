@@ -32,9 +32,6 @@ export default () => {
 
     return (
 
-
-
-
         <Layout style={{ height: '100vh' }}>
             <Header className="header">
                 <div className="logo" />
