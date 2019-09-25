@@ -8,7 +8,10 @@ import {
   Form,
   Input,
   Button,
-  Checkbox
+  Checkbox,
+  Row,
+  Col,
+  Select
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
@@ -21,10 +24,11 @@ import Auth from "../../utils/Auth";
 
 import API from "../../utils/API";
 
+const { Option } = Select;
 class index extends Component {
   state = {
     visible: false,
-
+    show: false,
     totalTime: "",
     hrs: "",
     min: "",
@@ -38,9 +42,20 @@ class index extends Component {
       visible: true
     });
   };
+  accountDrawer = () => {
+    this.setState({
+      show: true
+    });
+  };
 
   onClose = () => {
     this.setState({
+      visible: false
+    });
+  };
+  onClose = () => {
+    this.setState({
+      show: false,
       visible: false
     });
   };
@@ -159,7 +174,10 @@ class index extends Component {
               Login
             </Menu.Item>
 
-            <Menu.Item key="2">Create Account</Menu.Item>
+            <Menu.Item key="2" onClick={this.accountDrawer}>
+              Create Account
+            </Menu.Item>
+
             <Menu.Item
               key="3"
               style={{ position: "absolute", left: "39%", width: "600px" }}
@@ -184,7 +202,7 @@ class index extends Component {
           <Drawer
             title="Login"
             placement="left"
-            closable={false}
+            closable={true}
             onClose={this.onClose}
             visible={this.state.visible}
             width={350}
@@ -247,6 +265,115 @@ class index extends Component {
 
             {/* Sidebar Date/Time Set----------------------------------------------------------------------------------------------- */}
           </Drawer>
+          <div>
+            {/* <Button type="primary" onClick={this.accountDrawer}>
+                <Icon type="plus" /> Create Account
+              </Button> */}
+
+            <Drawer
+              title="Create a new account"
+              width={720}
+              onClose={this.onClose}
+              visible={this.state.show}
+              placement="left"
+              closable={true}
+              width={450}
+            >
+              <Form layout="vertical" hideRequiredMark>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Name">
+                      {getFieldDecorator("name", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter user name"
+                          }
+                        ]
+                      })(<Input placeholder="Please enter user name" />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Password">
+                      {getFieldDecorator("password", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter a password"
+                          }
+                        ]
+                      })(
+                        <Input
+                          style={{ width: "100%" }}
+                          placeholder="Please enter a password"
+                        />
+                      )}
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Genre">
+                      {getFieldDecorator("Genre", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please choose the Genres"
+                          }
+                        ]
+                      })(
+                        <Select placeholder="Please choose the type">
+                          <Option value="Hip-Hop">Hip-Hop</Option>
+                          <Option value="Rap">Rap</Option>
+                          <Option value="Pop">Pop</Option>
+                          <Option value="Study">Study</Option>
+                          <Option value="Classical">Classical</Option>
+                          <Option value="Bag Pipes">Bag Pipes</Option>
+                        </Select>
+                      )}
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={24}>
+                    <Form.Item label="Description">
+                      {getFieldDecorator("description", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "please enter url description"
+                          }
+                        ]
+                      })(
+                        <Input.TextArea
+                          rows={1}
+                          placeholder="please enter your habits you would like to start tracking"
+                        />
+                      )}
+                      <Button type="primary">Add</Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  bottom: 0,
+                  width: "100%",
+                  borderTop: "1px solid #e9e9e9",
+                  padding: "10px 16px",
+                  background: "#fff",
+                  textAlign: "right"
+                }}
+              >
+                <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+                  Cancel
+                </Button>
+                <Button onClick={this.onClose} type="primary">
+                  Submit
+                </Button>
+              </div>
+            </Drawer>
+          </div>
           <Layout
             style={{ height: "100%", padding: "24px 0", background: "#fff" }}
           >

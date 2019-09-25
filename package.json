@@ -34,6 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
     "querystring": "^0.2.0",
+    "react-h5-audio-player": "^1.2.1",
     "request": "^2.88.0",
     "spotify-web-api-node": "^4.0.0"
   },
