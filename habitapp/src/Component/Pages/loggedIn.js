@@ -271,5 +271,6 @@ return (
       </Footer>
     </Layout>
 );
-};
+
+    };
 
