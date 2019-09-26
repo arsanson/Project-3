@@ -490,7 +490,6 @@ class index extends Component {
 
                 <div id="alarm">
                   <p>
-                    hi
                     <div
                       className="outer"
                       style={{

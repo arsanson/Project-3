@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import UserContext from "../../context/UserContext";
 import {
   Layout,
   Menu,
@@ -19,9 +20,14 @@ import CountdownTimer from "react-component-countdown-timer";
 import "react-component-countdown-timer/lib/styles.css";
 import Unsplash from "react-unsplash-wrapper";
 import Auth from "../../utils/Auth";
+
+import API from "../../utils/API";
+
 const { Option } = Select;
 
 class index extends Component {
+  static contextType = UserContext;
+
   state = {
     visible: false,
     show: false,
@@ -30,7 +36,8 @@ class index extends Component {
     min: "",
     seconds: "",
     alarm: "00:00:00",
-    isTimerPaused: true
+    isTimerPaused: true,
+    spotifyId: ""
   };
 
   showDrawer = () => {
@@ -55,6 +62,24 @@ class index extends Component {
       visible: false
     });
   };
+  //create page submit
+
+  handleCreateSubmit = e => {
+    e.preventDefault();
+    fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.newUserName,
+        password: this.state.newPassword,
+        genre: this.state.newGenre
+      })
+    }).then(response => console.log(response));
+  };
+
+  //login submit
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -62,17 +87,54 @@ class index extends Component {
       const { username, password } = values;
       if (username && password) {
         Auth.logIn(username, password, response => {
-          this.context.setUser(response);
+          // this.context.setUser(response);
           this.props.history.push("/");
-        });
+        }).then(() =>
+          API.spotify().then(res => {
+            this.setState({
+              spotifyId: res[0].id
+            });
+            console.log(res[0].id);
+            console.log(this.state.spotifyId);
+          })
+        );
       }
     });
+
+    // this.props.form.validateFields((err, values) => {
+    //   console.log(values)
+    //   if (err) console.log(err);
+    const { username, password } = this.state;
+    if (username && password) {
+      Auth.logIn(username, password, response => {
+        this.context.setUser(response);
+        this.props.history.push("/login");
+      });
+    }
+    // });
+
+    //     this.props.form.validateFields((err, values) => {
+    //       if (err) console.log(err);
+    //       const { username, password } = values;
+    //       if (username && password) {
+    //         Auth.logIn(username, password, response => {
+    //           // this.context.setUser(response);
+    //           this.props.history.push("/");
+    //         }).then(() =>
+    //           API.spotify().then(res => console.log("res", res, res[0].uri))
+    //         );
+    //       }
+    //     });
   };
 
-  // Login Form
   changeHandler = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+    if (e.target) {
+      const { name, value } = e.target;
+      this.setState({ [name]: value });
+    } else {
+      // special case for select
+      this.setState({ newGenre: e });
+    }
   };
 
   // Timer
@@ -173,6 +235,22 @@ class index extends Component {
             <Menu.Item key="2" onClick={this.accountDrawer}>
               Create Account
             </Menu.Item>
+
+            <Menu.Item
+              key="3"
+              style={{ position: "absolute", left: "39%", width: "600px" }}
+            >
+              {this.state.spotifyId ? (
+                <iframe
+                  src={`https://open.spotify.com/embed/playlist/${this.state.spotifyId}`}
+                  width="600"
+                  height="70"
+                  frameborder="0"
+                  allowtransparency="true"
+                  allow="encrypted-media"
+                ></iframe>
+              ) : null}
+            </Menu.Item>
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>
@@ -225,7 +303,7 @@ class index extends Component {
                   valuePropName: "checked",
                   initialValue: true
                 })(<Checkbox>Remember me</Checkbox>)}
-                <a className="login-form-forgot" href="">
+                <a className="login-form-forgot" href="#">
                   Forgot password
                 </a>
                 <br></br>
@@ -250,12 +328,12 @@ class index extends Component {
 
             <Drawer
               title="Create a new account"
-              width={720}
               onClose={this.onClose}
               visible={this.state.show}
               placement="left"
               closable={true}
-              width={450}
+              width={430}
+              height={330}
             >
               <Form layout="vertical" hideRequiredMark>
                 <Row gutter={16}>
@@ -268,7 +346,13 @@ class index extends Component {
                             message: "Please enter user name"
                           }
                         ]
-                      })(<Input placeholder="Please enter user name" />)}
+                      })(
+                        <Input
+                          placeholder="Please enter user name"
+                          name="newUserName"
+                          onChange={this.changeHandler}
+                        />
+                      )}
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -284,6 +368,8 @@ class index extends Component {
                         <Input
                           style={{ width: "100%" }}
                           placeholder="Please enter a password"
+                          name="newPassword"
+                          onChange={this.changeHandler}
                         />
                       )}
                     </Form.Item>
@@ -298,7 +384,10 @@ class index extends Component {
                           }
                         ]
                       })(
-                        <Select placeholder="Please choose the type">
+                        <Select
+                          placeholder="Please choose the type"
+                          onChange={this.changeHandler}
+                        >
                           <Option value="Hip-Hop">Hip-Hop</Option>
                           <Option value="Rap">Rap</Option>
                           <Option value="Pop">Pop</Option>
@@ -311,24 +400,7 @@ class index extends Component {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={24}>
-                    <Form.Item label="Description">
-                      {getFieldDecorator("description", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "please enter url description"
-                          }
-                        ]
-                      })(
-                        <Input.TextArea
-                          rows={1}
-                          placeholder="please enter your habits you would like to start tracking"
-                        />
-                      )}
-                      <Button type="primary">Add</Button>
-                    </Form.Item>
-                  </Col>
+                  <Col span={24}></Col>
                 </Row>
               </Form>
               <div
@@ -346,7 +418,7 @@ class index extends Component {
                 <Button onClick={this.onClose} style={{ marginRight: 8 }}>
                   Cancel
                 </Button>
-                <Button onClick={this.onClose} type="primary">
+                <Button onClick={this.handleCreateSubmit} type="primary">
                   Submit
                 </Button>
               </div>

@@ -8,8 +8,8 @@
     "dev": "nodemon server",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'habitapp/*'\" \"npm run habitapp\"",
-    "habitapp": "cd habitapp && npm run start",
+    "start:dev": "concurrently \"nodemon server.js\" \"npm run habitapp\"",
+    "habitapp": "cd habitapp && npm start",
     "install": "cd habitapp && npm install",
     "build": "cd habitapp && npm run build",
     "heroku-postbuild": "npm run build"
