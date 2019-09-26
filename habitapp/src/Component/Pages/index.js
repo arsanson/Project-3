@@ -21,6 +21,9 @@ import "react-component-countdown-timer/lib/styles.css";
 import AudioPlayer from "react-h5-audio-player";
 
 import Auth from "../../utils/Auth";
+
+import API from "../../utils/API";
+
 const { Option } = Select;
 class index extends Component {
   state = {
@@ -63,9 +66,11 @@ class index extends Component {
       const { username, password } = values;
       if (username && password) {
         Auth.logIn(username, password, response => {
-          this.context.setUser(response);
+          // this.context.setUser(response);
           this.props.history.push("/");
-        });
+        }).then(() =>
+          API.spotify().then(res => console.log("res", res, res[0].uri))
+        );
       }
     });
   };
@@ -277,12 +282,12 @@ class index extends Component {
 
             <Drawer
               title="Create a new account"
-              width={720}
               onClose={this.onClose}
               visible={this.state.show}
               placement="left"
               closable={true}
-              width={450}
+              width={430}
+              height={330}
             >
               <Form layout="vertical" hideRequiredMark>
                 <Row gutter={16}>
@@ -338,24 +343,7 @@ class index extends Component {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={24}>
-                    <Form.Item label="Description">
-                      {getFieldDecorator("description", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "please enter url description"
-                          }
-                        ]
-                      })(
-                        <Input.TextArea
-                          rows={1}
-                          placeholder="please enter your habits you would like to start tracking"
-                        />
-                      )}
-                      <Button type="primary">Add</Button>
-                    </Form.Item>
-                  </Col>
+                  <Col span={24}></Col>
                 </Row>
               </Form>
               <div
