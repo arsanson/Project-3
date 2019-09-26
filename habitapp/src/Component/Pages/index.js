@@ -16,16 +16,15 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
-
 import CountdownTimer from "react-component-countdown-timer";
 import "react-component-countdown-timer/lib/styles.css";
-import AudioPlayer from "react-h5-audio-player";
-
+import Unsplash from "react-unsplash-wrapper";
 import Auth from "../../utils/Auth";
 
 import API from "../../utils/API";
 
 const { Option } = Select;
+
 class index extends Component {
   static contextType = UserContext;
 
@@ -252,23 +251,7 @@ class index extends Component {
                   allow="encrypted-media"
                 ></iframe>
               ) : null}
-              {/* <AudioPlayer
-                autoPlay
-                src="http://example.com/audio.mp3"
-                onPlay={e => console.log("onPlay")}
-
-              // other props here
-              />
-
-                // other props here
-              /> */}
             </Menu.Item>
-            {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
-              <Icon type="play-circle" theme="twoTone" />
-            </Menu.Item>
-            <Menu.Item key="4" style={{ position: "absolute", left: "52%" }}>
-              <Icon type="pause-circle" theme="twoTone" />
-            </Menu.Item> */}
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>
@@ -562,50 +545,54 @@ class index extends Component {
                 fontSize: "2em"
               }}
             >
-              <div id="container">
-                <div className="outer">
-                  <div id="timerOuter" className="outer">
-                    <div id="timerInner" className="most-inner">
-                      <span>
-                        <h1>Timer</h1>
-                        {!this.state.totalTime && (
-                          <CountdownTimer count={0} hideDay />
-                        )}
-                        {this.state.totalTime && (
-                          <CountdownTimer
-                            count={this.state.totalTime}
-                            hideDay
-                          />
-                        )}
-                        {this.timesUp}
-                      </span>
+              <Unsplash collectionId={8695541} style={{ opacity: ".9" }}>
+                <div id="container">
+                  <div className="outer">
+                    <div id="timerOuter" className="outer">
+                      <div id="timerInner" className="most-inner">
+                        <span>
+                          <h1>Timer</h1>
+                          {!this.state.totalTime && (
+                            <CountdownTimer count={0} hideDay />
+                          )}
+                          {this.state.totalTime && (
+                            <CountdownTimer
+                              count={this.state.totalTime}
+                              hideDay
+                            />
+                          )}
+                          {this.timesUp}
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div id="alarmOuter" className="outer">
-                    <div id="alarmInner" className="most-inner">
-                      <h1>Alarm</h1>
+                    <div id="alarmOuter" className="outer">
+                      <div id="alarmInner" className="most-inner">
+                        <h1>Alarm</h1>
 
-                      {this.state.alarm}
+                        {this.state.alarm}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="inner">
-                    <div className="most-inner">
-                      <span
-                        className={
-                          this.state.time === "00:00:00" ? "time blink" : "time"
-                        }
-                      >
-                        {" "}
-                        <h1 style={{ fontSize: ".5em" }}>Current Time</h1>
-                        {this.state.time}
-                      </span>
-                      <span className="amPm">{this.state.amPm}</span>
+                    <div className="inner">
+                      <div className="most-inner">
+                        <span
+                          className={
+                            this.state.time === "00:00:00"
+                              ? "time blink"
+                              : "time"
+                          }
+                        >
+                          {" "}
+                          <h1 style={{ fontSize: ".5em" }}>Current Time</h1>
+                          {this.state.time}
+                        </span>
+                        <span className="amPm">{this.state.amPm}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Unsplash>
             </Content>
             {/* Content------------------------------------------------------------------------------------------------------------- */}
           </Layout>
