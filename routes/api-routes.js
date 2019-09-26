@@ -26,10 +26,12 @@ module.exports = function (app) {
     })
 
     app.post("/api/signup", function (req, res) {
+        console.log(req.body)
         User.create(req.body)
             .then(function (data) {
                 res.json({ message: "User Created!" });
             }).catch(function (err) {
+                console.log(err)
                 res.status(500).json({
                     error: err.message
                 });
