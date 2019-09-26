@@ -3,8 +3,9 @@ import { Layout, Menu, Breadcrumb, Icon } from "antd";
 import "antd/dist/antd.css";
 import { Calendar } from "antd";
 import { List, Input } from "antd";
+import Auth from '../../utils/Auth'
 
-export default () => {
+export default props => {
 
 
 
@@ -30,6 +31,12 @@ export default () => {
         console.log(value, mode);
     }
 
+    const logOutHandler = () => {
+        Auth.logOut(() => {
+            props.history.push("/");
+        })
+    }
+
 
     return (
 
@@ -42,7 +49,7 @@ export default () => {
                     defaultSelectedKeys={['2']}
                     style={{ lineHeight: '64px' }}
                 >
-                    <Menu.Item key="1" >Logout</Menu.Item>
+                    <Menu.Item key="1" onClick={logOutHandler}>Logout</Menu.Item>
                     <Menu.Item key="2">Welcome!</Menu.Item>
                     <Menu.Item key='3' style={{ position: 'absolute', left: '50%' }}>
                         <Icon type="play-square" />
