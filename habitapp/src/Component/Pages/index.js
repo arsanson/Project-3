@@ -34,7 +34,8 @@ class index extends Component {
     min: "",
     seconds: "",
     alarm: "00:00:00",
-    isTimerPaused: true
+    isTimerPaused: true,
+    spotifyId: ""
   };
 
   showDrawer = () => {
@@ -69,7 +70,13 @@ class index extends Component {
           // this.context.setUser(response);
           this.props.history.push("/");
         }).then(() =>
-          API.spotify().then(res => console.log("res", res, res[0].uri))
+          API.spotify().then(res => {
+            this.setState({
+              spotifyId: res[0].id
+            });
+            console.log(res[0].id);
+            console.log(this.state.spotifyId);
+          })
         );
       }
     });
@@ -184,14 +191,16 @@ class index extends Component {
               key="3"
               style={{ position: "absolute", left: "39%", width: "600px" }}
             >
-              <iframe
-                src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
-                width="600"
-                height="70"
-                frameborder="0"
-                allowtransparency="true"
-                allow="encrypted-media"
-              ></iframe>
+              {this.state.spotifyId ? (
+                <iframe
+                  src={`https://open.spotify.com/embed/playlist/${this.state.spotifyId}`}
+                  width="600"
+                  height="70"
+                  frameborder="0"
+                  allowtransparency="true"
+                  allow="encrypted-media"
+                ></iframe>
+              ) : null}
               {/* <AudioPlayer
                 autoPlay
                 src="http://example.com/audio.mp3"
@@ -257,7 +266,7 @@ class index extends Component {
                   valuePropName: "checked",
                   initialValue: true
                 })(<Checkbox>Remember me</Checkbox>)}
-                <a className="login-form-forgot" href="">
+                <a className="login-form-forgot" href="#">
                   Forgot password
                 </a>
                 <br></br>
