@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
 import "antd/dist/antd.css";
 import { Calendar } from "antd";
-import { List } from "antd";
+import { List, Input } from "antd";
 
 export default () => {
   var objDate = new Date();
@@ -16,6 +16,8 @@ export default () => {
 
   const { SubMenu } = Menu;
   const { Header, Content, Footer, Sider } = Layout;
+  const { Search } = Input;
+
   const data = [
     "Racing car sprays burning fuel into crowd.",
     "Japanese princess to wed commoner.",
@@ -111,6 +113,12 @@ export default () => {
           >
             <div>
               <h3 style={{ margin: "16px 0" }}>Todo List</h3>
+              <Search
+                placeholder="input daily routines"
+                enterButton="Add"
+                size="large"
+                onSearch={value => console.log(value)}
+              />
               <List
                 size="large"
                 header={<div>Header</div>}
