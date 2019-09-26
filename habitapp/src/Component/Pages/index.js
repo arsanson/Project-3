@@ -37,7 +37,8 @@ class index extends Component {
     min: "",
     seconds: "",
     alarm: "00:00:00",
-    isTimerPaused: true
+    isTimerPaused: true,
+    spotifyId: ""
   };
 
   showDrawer = () => {
@@ -64,28 +65,42 @@ class index extends Component {
   };
   //create page submit
 
-  handleCreateSubmit = (e) => {
+  handleCreateSubmit = e => {
     e.preventDefault();
-    fetch('/api/signup', {
-      method: 'POST',
+    fetch("/api/signup", {
+      method: "POST",
       headers: {
-        'Content-type': 'application/json'
+        "Content-type": "application/json"
       },
       body: JSON.stringify({
         username: this.state.newUserName,
         password: this.state.newPassword,
         genre: this.state.newGenre
       })
-    })
-      .then(response => console.log(response))
-  }
-
-
-
+    }).then(response => console.log(response));
+  };
 
   //login submit
   handleSubmit = e => {
     e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (err) console.log(err);
+      const { username, password } = values;
+      if (username && password) {
+        Auth.logIn(username, password, response => {
+          // this.context.setUser(response);
+          this.props.history.push("/");
+        }).then(() =>
+          API.spotify().then(res => {
+            this.setState({
+              spotifyId: res[0].id
+            });
+            console.log(res[0].id);
+            console.log(this.state.spotifyId);
+          })
+        );
+      }
+    });
 
     // this.props.form.validateFields((err, values) => {
     //   console.log(values)
@@ -113,12 +128,12 @@ class index extends Component {
     //     });
   };
 
-
   changeHandler = e => {
     if (e.target) {
       const { name, value } = e.target;
       this.setState({ [name]: value });
-    } else { // special case for select
+    } else {
+      // special case for select
       this.setState({ newGenre: e });
     }
   };
@@ -226,14 +241,16 @@ class index extends Component {
               key="3"
               style={{ position: "absolute", left: "39%", width: "600px" }}
             >
-              <iframe
-                src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
-                width="600"
-                height="70"
-                frameborder="0"
-                allowtransparency="true"
-                allow="encrypted-media"
-              ></iframe>
+              {this.state.spotifyId ? (
+                <iframe
+                  src={`https://open.spotify.com/embed/playlist/${this.state.spotifyId}`}
+                  width="600"
+                  height="70"
+                  frameborder="0"
+                  allowtransparency="true"
+                  allow="encrypted-media"
+                ></iframe>
+              ) : null}
               {/* <AudioPlayer
                 autoPlay
                 src="http://example.com/audio.mp3"
@@ -244,7 +261,6 @@ class index extends Component {
 
                 // other props here
               /> */}
-
             </Menu.Item>
             {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
               <Icon type="play-circle" theme="twoTone" />
@@ -304,7 +320,7 @@ class index extends Component {
                   valuePropName: "checked",
                   initialValue: true
                 })(<Checkbox>Remember me</Checkbox>)}
-                <a className="login-form-forgot" href="">
+                <a className="login-form-forgot" href="#">
                   Forgot password
                 </a>
                 <br></br>
@@ -312,7 +328,7 @@ class index extends Component {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                // href="../loggedIn"
+                  // href="../loggedIn"
                 >
                   Log in
                 </Button>
@@ -347,10 +363,13 @@ class index extends Component {
                             message: "Please enter user name"
                           }
                         ]
-                      })(<Input placeholder="Please enter user name"
-
-                        name="newUserName"
-                        onChange={this.changeHandler} />)}
+                      })(
+                        <Input
+                          placeholder="Please enter user name"
+                          name="newUserName"
+                          onChange={this.changeHandler}
+                        />
+                      )}
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -382,7 +401,10 @@ class index extends Component {
                           }
                         ]
                       })(
-                        <Select placeholder="Please choose the type" onChange={this.changeHandler} >
+                        <Select
+                          placeholder="Please choose the type"
+                          onChange={this.changeHandler}
+                        >
                           <Option value="Hip-Hop">Hip-Hop</Option>
                           <Option value="Rap">Rap</Option>
                           <Option value="Pop">Pop</Option>
@@ -592,9 +614,7 @@ class index extends Component {
         </Footer>
       </Layout>
     );
-
   }
 }
-
 
 export default Form.create()(index);
