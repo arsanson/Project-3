@@ -22,6 +22,9 @@ import "react-component-countdown-timer/lib/styles.css";
 import AudioPlayer from "react-h5-audio-player";
 
 import Auth from "../../utils/Auth";
+
+import API from "../../utils/API";
+
 const { Option } = Select;
 class index extends Component {
   static contextType = UserContext;
@@ -83,6 +86,7 @@ class index extends Component {
   //login submit
   handleSubmit = e => {
     e.preventDefault();
+
     // this.props.form.validateFields((err, values) => {
     //   console.log(values)
     //   if (err) console.log(err);
@@ -94,7 +98,20 @@ class index extends Component {
       });
     }
     // });
-  };
+
+//     this.props.form.validateFields((err, values) => {
+//       if (err) console.log(err);
+//       const { username, password } = values;
+//       if (username && password) {
+//         Auth.logIn(username, password, response => {
+//           // this.context.setUser(response);
+//           this.props.history.push("/");
+//         }).then(() =>
+//           API.spotify().then(res => console.log("res", res, res[0].uri))
+//         );
+//       }
+//     });
+//   };
 
 
   changeHandler = e => {
@@ -209,12 +226,25 @@ class index extends Component {
               key="3"
               style={{ position: "absolute", left: "39%", width: "600px" }}
             >
-              <AudioPlayer
+              <iframe
+                src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
+                width="600"
+                height="70"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+              ></iframe>
+              {/* <AudioPlayer
                 autoPlay
                 src="http://example.com/audio.mp3"
                 onPlay={e => console.log("onPlay")}
+
               // other props here
               />
+
+                // other props here
+              /> */}
+
             </Menu.Item>
             {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
               <Icon type="play-circle" theme="twoTone" />
@@ -299,12 +329,12 @@ class index extends Component {
 
             <Drawer
               title="Create a new account"
-              width={720}
               onClose={this.onClose}
               visible={this.state.show}
               placement="left"
               closable={true}
-              width={450}
+              width={430}
+              height={330}
             >
               <Form layout="vertical" hideRequiredMark>
                 <Row gutter={16}>
@@ -365,24 +395,7 @@ class index extends Component {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={24}>
-                    <Form.Item label="Description">
-                      {getFieldDecorator("description", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "please enter url description"
-                          }
-                        ]
-                      })(
-                        <Input.TextArea
-                          rows={1}
-                          placeholder="please enter your habits you would like to start tracking"
-                        />
-                      )}
-                      <Button type="primary">Add</Button>
-                    </Form.Item>
-                  </Col>
+                  <Col span={24}></Col>
                 </Row>
               </Form>
               <div
@@ -416,7 +429,7 @@ class index extends Component {
                 defaultOpenKeys={["sub1"]}
                 style={{ height: "100%" }}
               >
-                <Menu>
+                <Menu style={{ background: "#fff" }}>
                   <Menu.Item key="1">
                     <span>
                       <Icon type="schedule" />

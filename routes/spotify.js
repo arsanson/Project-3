@@ -32,6 +32,7 @@ module.exports = function (req, res) {
             };
             request.get(options, function (error, response, body) {
                 console.log(body.playlists.items[0].owner.uri);
+                res.json(body.playlists.items);
             });
         }
     });

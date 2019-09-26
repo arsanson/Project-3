@@ -1,31 +1,27 @@
-import React, { Component } from 'react';
-import BeforeLogin from './Component/Pages/index'
-import ProtectedRoute from './Component/Pages/ProtectedRoute'
-import LoggedIn from './Component/Pages/loggedIn'
+import React, { Component } from "react";
+import BeforeLogin from "./Component/Pages/index";
+import ProtectedRoute from "./Component/Pages/ProtectedRoute";
+import LoggedIn from "./Component/Pages/loggedIn";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import UserContext from "./context/UserContext";
 import authenticatedAxios from "./utils/AuthenticatedAxios";
 
-
 class App extends Component {
-
   state = {
     user: null
-  }
+  };
 
-  setUser = (user) => {
+  setUser = user => {
     this.setState({ user });
-  }
+  };
 
   componentDidMount() {
     const token = localStorage.getItem("token");
     if (token) {
-      authenticatedAxios
-        .get("/api/me")
-        .then(response => {
-          console.log('****', response)
-          this.setUser(response.data)
-        });
+      authenticatedAxios.get("/api/me").then(response => {
+        console.log("****", response);
+        this.setUser(response.data);
+      });
     }
   }
 
@@ -33,11 +29,9 @@ class App extends Component {
     const { user } = this.state;
     const setUser = this.setUser;
 
-
     return (
       <Router>
         <div>
-
           <UserContext.Provider
             value={{
               user: user,
@@ -51,7 +45,6 @@ class App extends Component {
       </Router>
     );
   }
-
 }
 
 export default App;
