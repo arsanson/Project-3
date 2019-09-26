@@ -30,6 +30,7 @@ export default () => {
         console.log(value, mode);
     }
 
+
     return (
 
         <Layout style={{ height: '100vh' }}>
@@ -41,7 +42,7 @@ export default () => {
                     defaultSelectedKeys={['2']}
                     style={{ lineHeight: '64px' }}
                 >
-                    <Menu.Item key="1">Logout</Menu.Item>
+                    <Menu.Item key="1" >Logout</Menu.Item>
                     <Menu.Item key="2">Welcome!</Menu.Item>
                     <Menu.Item key='3' style={{ position: 'absolute', left: '50%' }}>
                         <Icon type="play-square" />

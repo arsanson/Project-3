@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import UserContext from "../../context/UserContext";
 import {
   Layout,
   Menu,
@@ -23,6 +24,8 @@ import AudioPlayer from "react-h5-audio-player";
 import Auth from "../../utils/Auth";
 const { Option } = Select;
 class index extends Component {
+  static contextType = UserContext;
+
   state = {
     visible: false,
     show: false,
@@ -80,16 +83,17 @@ class index extends Component {
   //login submit
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (err) console.log(err);
-      const { username, password } = values;
-      if (username && password) {
-        Auth.logIn(username, password, response => {
-          this.context.setUser(response);
-          this.props.history.push("/");
-        });
-      }
-    });
+    // this.props.form.validateFields((err, values) => {
+    //   console.log(values)
+    //   if (err) console.log(err);
+    const { username, password } = this.state;
+    if (username && password) {
+      Auth.logIn(username, password, response => {
+        this.context.setUser(response);
+        this.props.history.push("/login");
+      });
+    }
+    // });
   };
 
 
