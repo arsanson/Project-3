@@ -180,13 +180,9 @@ class index extends Component {
             defaultSelectedKeys={["2"]}
             style={{ lineHeight: "64px" }}
           >
-            <Menu.Item key="1" onClick={this.showDrawer}>
-              Login
-            </Menu.Item>
+            <Menu.Item key="1">Logout</Menu.Item>
 
-            <Menu.Item key="2" onClick={this.accountDrawer}>
-              Create Account
-            </Menu.Item>
+            <Menu.Item key="2">Welcome</Menu.Item>
 
             <Menu.Item
               key="3"

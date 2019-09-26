@@ -8,11 +8,18 @@ import authenticatedAxios from "./utils/AuthenticatedAxios";
 
 class App extends Component {
   state = {
-    user: null
+    user: null,
+    spotifyId: ""
   };
 
   setUser = user => {
+    console.log("user", user);
     this.setState({ user });
+  };
+
+  setSpotifyId = id => {
+    console.log("id", id);
+    this.setState({ spotifyId: id });
   };
 
   componentDidMount() {
@@ -28,6 +35,8 @@ class App extends Component {
   render() {
     const { user } = this.state;
     const setUser = this.setUser;
+    const spotifyId = this.spotifyId;
+    const setSpotifyId = this.setSpotifyId;
 
     return (
       <Router>
@@ -35,7 +44,9 @@ class App extends Component {
           <UserContext.Provider
             value={{
               user: user,
-              setUser: setUser
+              setUser: setUser,
+              spotifyId: spotifyId,
+              setSpotifyId: setSpotifyId
             }}
           >
             <ProtectedRoute exact path="/login" component={LoggedIn} />

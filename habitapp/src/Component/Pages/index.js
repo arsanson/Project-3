@@ -87,13 +87,14 @@ class index extends Component {
       const { username, password } = values;
       if (username && password) {
         Auth.logIn(username, password, response => {
-          // this.context.setUser(response);
+          this.context.setUser(response);
           this.props.history.push("/");
         }).then(() =>
           API.spotify().then(res => {
             this.setState({
               spotifyId: res[0].id
             });
+            this.context.setSpotifyId(res[0].id);
             console.log(res[0].id);
             console.log(this.state.spotifyId);
           })
