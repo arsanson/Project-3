@@ -99,19 +99,19 @@ class index extends Component {
     }
     // });
 
-//     this.props.form.validateFields((err, values) => {
-//       if (err) console.log(err);
-//       const { username, password } = values;
-//       if (username && password) {
-//         Auth.logIn(username, password, response => {
-//           // this.context.setUser(response);
-//           this.props.history.push("/");
-//         }).then(() =>
-//           API.spotify().then(res => console.log("res", res, res[0].uri))
-//         );
-//       }
-//     });
-//   };
+    //     this.props.form.validateFields((err, values) => {
+    //       if (err) console.log(err);
+    //       const { username, password } = values;
+    //       if (username && password) {
+    //         Auth.logIn(username, password, response => {
+    //           // this.context.setUser(response);
+    //           this.props.history.push("/");
+    //         }).then(() =>
+    //           API.spotify().then(res => console.log("res", res, res[0].uri))
+    //         );
+    //       }
+    //     });
+  };
 
 
   changeHandler = e => {
@@ -592,7 +592,9 @@ class index extends Component {
         </Footer>
       </Layout>
     );
+
   }
 }
+
 
 export default Form.create()(index);
