@@ -22,6 +22,10 @@ const UserSchema = new Schema({
             },
             "Password should be longer."
         ]
+    },
+    genre: {
+        type: String,
+        required: true
     }
 });
 

@@ -53,9 +53,31 @@ class index extends Component {
   onClose = () => {
     this.setState({
       show: false,
-      visible:false
+      visible: false
     });
   };
+  //create page submit
+
+  handleCreateSubmit = (e) => {
+    e.preventDefault();
+    fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.newUserName,
+        password: this.state.newPassword,
+        genre: this.state.newGenre
+      })
+    })
+      .then(response => console.log(response))
+  }
+
+
+
+
+  //login submit
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -70,10 +92,14 @@ class index extends Component {
     });
   };
 
-  // Login Form
+
   changeHandler = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+    if (e.target) {
+      const { name, value } = e.target;
+      this.setState({ [name]: value });
+    } else { // special case for select
+      this.setState({ newGenre: e });
+    }
   };
 
   // Timer
@@ -183,7 +209,7 @@ class index extends Component {
                 autoPlay
                 src="http://example.com/audio.mp3"
                 onPlay={e => console.log("onPlay")}
-                // other props here
+              // other props here
               />
             </Menu.Item>
             {/* <Menu.Item key="3" style={{ position: "absolute", left: "50%" }}>
@@ -252,7 +278,7 @@ class index extends Component {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                  // href="../loggedIn"
+                // href="../loggedIn"
                 >
                   Log in
                 </Button>
@@ -287,7 +313,10 @@ class index extends Component {
                             message: "Please enter user name"
                           }
                         ]
-                      })(<Input placeholder="Please enter user name" />)}
+                      })(<Input placeholder="Please enter user name"
+
+                        name="newUserName"
+                        onChange={this.changeHandler} />)}
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -303,6 +332,8 @@ class index extends Component {
                         <Input
                           style={{ width: "100%" }}
                           placeholder="Please enter a password"
+                          name="newPassword"
+                          onChange={this.changeHandler}
                         />
                       )}
                     </Form.Item>
@@ -317,7 +348,7 @@ class index extends Component {
                           }
                         ]
                       })(
-                        <Select placeholder="Please choose the type">
+                        <Select placeholder="Please choose the type" onChange={this.changeHandler} >
                           <Option value="Hip-Hop">Hip-Hop</Option>
                           <Option value="Rap">Rap</Option>
                           <Option value="Pop">Pop</Option>
@@ -365,7 +396,7 @@ class index extends Component {
                 <Button onClick={this.onClose} style={{ marginRight: 8 }}>
                   Cancel
                 </Button>
-                <Button onClick={this.onClose} type="primary">
+                <Button onClick={this.handleCreateSubmit} type="primary">
                   Submit
                 </Button>
               </div>
