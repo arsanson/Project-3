@@ -38,4 +38,4 @@ mongoose.connect(
 );
 
 // start the server
-app.listen(PORT, () => console.log(`Example app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
