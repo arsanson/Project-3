@@ -11,7 +11,8 @@ import {
   Checkbox,
   Row,
   Col,
-  Select
+  Select,
+  Input
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
@@ -157,7 +158,7 @@ class index extends Component {
       objDate.toLocaleString("en", { day: "numeric" }) +
       ", " +
       objDate.toLocaleString("en", { year: "numeric" });
-
+    const { Search } = Input;
     const data = [
       "Racing car sprays burning fuel into crowd.",
       "Japanese princess to wed commoner.",
