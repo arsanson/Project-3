@@ -137,6 +137,14 @@ class index extends Component {
     }, 1000);
   };
 
+  //  Logout
+
+  logOutHandler = () => {
+    Auth.logOut(() => {
+      this.props.history.push("/");
+    });
+  };
+
   // Clock
 
   render() {
@@ -157,13 +165,13 @@ class index extends Component {
       objDate.toLocaleString("en", { day: "numeric" }) +
       ", " +
       objDate.toLocaleString("en", { year: "numeric" });
-
+    const { Search } = Input;
     const data = [
-      "Racing car sprays burning fuel into crowd.",
-      "Japanese princess to wed commoner.",
-      "Australian walks 100km after outback crash.",
-      "Man charged over missing wedding girl.",
-      "Los Angeles battles huge wildfires."
+      // "Racing car sprays burning fuel into crowd.",
+      // "Japanese princess to wed commoner.",
+      // "Australian walks 100km after outback crash.",
+      // "Man charged over missing wedding girl.",
+      // "Los Angeles battles huge wildfires."
     ];
 
     function onPanelChange(value, mode) {
@@ -180,7 +188,9 @@ class index extends Component {
             defaultSelectedKeys={["2"]}
             style={{ lineHeight: "64px" }}
           >
-            <Menu.Item key="1">Logout</Menu.Item>
+            <Menu.Item key="1" onClick={this.logOutHandler}>
+              Logout
+            </Menu.Item>
 
             <Menu.Item key="2">Welcome</Menu.Item>
 
@@ -587,10 +597,19 @@ class index extends Component {
                 > */}
                 <div style={{ width: "50%", background: "white" }}>
                   <h3 style={{ margin: "16px 0" }}>Todo List</h3>
+                  <div>
+                    {
+                      <Search
+                        placeholder="input search text"
+                        enterButton="add"
+                        size="large"
+                        onSearch={value => console.log(value)}
+                      />
+                    }
+                  </div>
+                  ,
                   <List
                     size="large"
-                    header={<div>Header</div>}
-                    footer={<div>Footer</div>}
                     bordered
                     dataSource={data}
                     renderItem={item => <List.Item>{item}</List.Item>}
