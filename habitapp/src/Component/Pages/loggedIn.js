@@ -165,8 +165,14 @@ class index extends Component {
       objDate.toLocaleString("en", { day: "numeric" }) +
       ", " +
       objDate.toLocaleString("en", { year: "numeric" });
-
-    const data = [];
+    const { Search } = Input;
+    const data = [
+      // "Racing car sprays burning fuel into crowd.",
+      // "Japanese princess to wed commoner.",
+      // "Australian walks 100km after outback crash.",
+      // "Man charged over missing wedding girl.",
+      // "Los Angeles battles huge wildfires."
+    ];
 
     function onPanelChange(value, mode) {
       console.log(value, mode);
@@ -592,12 +598,14 @@ class index extends Component {
                 <div style={{ width: "50%", background: "white" }}>
                   <h3 style={{ margin: "16px 0" }}>Todo List</h3>
                   <div>
-                    {/* <Search
-                      placeholder="input search text"
-                      enterButton="add"
-                      size="large"
-                      onSearch={value => console.log(value)}
-                    /> */}
+                    {
+                      <Search
+                        placeholder="input search text"
+                        enterButton="add"
+                        size="large"
+                        onSearch={value => console.log(value)}
+                      />
+                    }
                   </div>
                   ,
                   <List
