@@ -155,6 +155,16 @@ class index extends Component {
   };
 
   //Insert-Todos
+  handleTodoSubmit = e => {
+    e.preventDefault();
+    if (this.state.item) {
+      API.saveTodo({
+        item: this.state.item
+      })
+        .then(res => this.loadTodos())
+        .catch(err => console.log(err));
+    }
+  };
 
   //Load To-Dos
   loadTodos = () => {
@@ -352,26 +362,6 @@ class index extends Component {
                           <Option value="Bag Pipes">Bag Pipes</Option>
                         </Select>
                       )}
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row gutter={16}>
-                  <Col span={24}>
-                    <Form.Item label="Description">
-                      {getFieldDecorator("description", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "please enter url description"
-                          }
-                        ]
-                      })(
-                        <Input.TextArea
-                          rows={1}
-                          placeholder="please enter your habits you would like to start tracking"
-                        />
-                      )}
-                      <Button type="primary">Add</Button>
                     </Form.Item>
                   </Col>
                 </Row>
@@ -606,10 +596,20 @@ class index extends Component {
                 > */}
                 <div style={{ width: "60%", background: "white" }}>
                   <h3 style={{ margin: "16px 0" }}>Todo List</h3>
-                  <div>{<Input placeholder="Basic usage" />}</div>
+                  <div>
+                    {
+                      <Input
+                        placeholder="Basic usage"
+                        name="item"
+                        onChange={this.handleInputChange}
+                      />
+                    }
+                  </div>
                   <div>
                     {" "}
-                    <Button type="primary">Add</Button>{" "}
+                    <Button type="primary" onClick={this.handleTodoSubmit}>
+                      Add
+                    </Button>{" "}
                   </div>
                   <List
                     size="large"
