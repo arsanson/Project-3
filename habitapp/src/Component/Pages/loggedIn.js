@@ -591,6 +591,15 @@ class index extends Component {
                 > */}
                 <div style={{ width: "50%", background: "white" }}>
                   <h3 style={{ margin: "16px 0" }}>Todo List</h3>
+                  <div>
+                    <Search
+                      placeholder="input search text"
+                      enterButton="add"
+                      size="large"
+                      onSearch={value => console.log(value)}
+                    />
+                  </div>
+                  ,
                   <List
                     size="large"
                     bordered
