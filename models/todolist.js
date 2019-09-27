@@ -4,17 +4,15 @@ const Schema = mongoose.Schema;
 //using the schema constructor, create a new TodosSchema object
 
 const TodolistSchema = new Schema({
+  item: {
+    type: String
+  },
 
-    item: {
-        type: String
-    },
-
-    userId: {
-        type: String,
-        ref: 'User'
-    }
-})
-
+  userId: {
+    type: String,
+    ref: "User"
+  }
+});
 
 //This creates our model from the above schema, using mongoose model method
 

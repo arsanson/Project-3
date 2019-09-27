@@ -21,7 +21,10 @@ import Unsplash from "react-unsplash-wrapper";
 import { Calendar } from "antd";
 import { List } from "antd";
 import Auth from "../../utils/Auth";
+import API from "../../utils/API";
 const { Option } = Select;
+
+let intervalId;
 
 class index extends Component {
   state = {
@@ -32,7 +35,8 @@ class index extends Component {
     min: "",
     seconds: "",
     alarm: "00:00:00",
-    isTimerPaused: true
+    isTimerPaused: true,
+    todos: []
   };
 
   showDrawer = () => {
@@ -111,9 +115,14 @@ class index extends Component {
     };
   };
 
-  componentDidMount = () => {
-    setInterval(this.getTime, 1000);
-  };
+  componentDidMount() {
+    intervalId = setInterval(this.getTime, 1000);
+    this.loadTodos();
+  }
+
+  componentWillUnmount() {
+    clearInterval(intervalId);
+  }
 
   getTime = () => {
     const takeTwelve = n => (n > 12 ? n - 12 : n),
@@ -145,6 +154,15 @@ class index extends Component {
     });
   };
 
+  //Insert-Todos
+
+  //Load To-Dos
+  loadTodos = () => {
+    API.getTodos()
+      .then(todos => this.setState({ todos: todos }))
+      .catch(err => console.log(err));
+  };
+
   // Clock
 
   render() {
@@ -166,13 +184,6 @@ class index extends Component {
       ", " +
       objDate.toLocaleString("en", { year: "numeric" });
     const { Search } = Input;
-    const data = [
-      // "Racing car sprays burning fuel into crowd.",
-      // "Japanese princess to wed commoner.",
-      // "Australian walks 100km after outback crash.",
-      // "Man charged over missing wedding girl.",
-      // "Los Angeles battles huge wildfires."
-    ];
 
     function onPanelChange(value, mode) {
       console.log(value, mode);
@@ -202,7 +213,7 @@ class index extends Component {
                 src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
                 width="600"
                 height="70"
-                frameborder="0"
+                frameBorder="0"
                 allowtransparency="true"
                 allow="encrypted-media"
               ></iframe>
@@ -495,66 +506,64 @@ class index extends Component {
                 </SubMenu>
 
                 <div id="alarm">
-                  <p>
+                  <div
+                    className="outer"
+                    style={{
+                      left: "15%",
+                      marginLeft: "0"
+                    }}
+                  >
                     <div
+                      id="timerOuter"
                       className="outer"
-                      style={{
-                        left: "15%",
-                        marginLeft: "0"
-                      }}
+                      style={{ marginLeft: "0", top: "-15%" }}
                     >
-                      <div
-                        id="timerOuter"
-                        className="outer"
-                        style={{ marginLeft: "0", top: "-15%" }}
-                      >
-                        <div id="timerInner" className="most-inner">
-                          <span>
-                            <h1>Timer</h1>
-                            {!this.state.totalTime && (
-                              <CountdownTimer count={0} hideDay />
-                            )}
-                            {this.state.totalTime && (
-                              <CountdownTimer
-                                count={this.state.totalTime}
-                                hideDay
-                              />
-                            )}
-                            {this.timesUp}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div
-                        id="alarmOuter"
-                        className="outer"
-                        style={{ top: "-15%" }}
-                      >
-                        <div id="alarmInner" className="most-inner">
-                          <h1>Alarm</h1>
-                          <div>{this.state.alarm}</div>
-                        </div>
-                      </div>
-
-                      <div className="inner">
-                        <div className="most-inner">
-                          <span
-                            className={
-                              this.state.time === "00:00:00"
-                                ? "time blink"
-                                : "time"
-                            }
-                            style={{ top: "10%" }}
-                          >
-                            {" "}
-                            <h1 style={{ fontSize: ".5em" }}>Current Time</h1>
-                            {this.state.time}
-                          </span>
-                          <span className="amPm">{this.state.amPm}</span>
-                        </div>
+                      <div id="timerInner" className="most-inner">
+                        <span>
+                          <h1>Timer</h1>
+                          {!this.state.totalTime && (
+                            <CountdownTimer count={0} hideDay />
+                          )}
+                          {this.state.totalTime && (
+                            <CountdownTimer
+                              count={this.state.totalTime}
+                              hideDay
+                            />
+                          )}
+                          {/* {this.timesUp} */}
+                        </span>
                       </div>
                     </div>
-                  </p>
+
+                    <div
+                      id="alarmOuter"
+                      className="outer"
+                      style={{ top: "-15%" }}
+                    >
+                      <div id="alarmInner" className="most-inner">
+                        <h1>Alarm</h1>
+                        <div>{this.state.alarm}</div>
+                      </div>
+                    </div>
+
+                    <div className="inner">
+                      <div className="most-inner">
+                        <span
+                          className={
+                            this.state.time === "00:00:00"
+                              ? "time blink"
+                              : "time"
+                          }
+                          style={{ top: "10%" }}
+                        >
+                          {" "}
+                          <h1 style={{ fontSize: ".5em" }}>Current Time</h1>
+                          {this.state.time}
+                        </span>
+                        <span className="amPm">{this.state.amPm}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div
@@ -595,24 +604,17 @@ class index extends Component {
                     background: "white"
                   }}
                 > */}
-                <div style={{ width: "50%", background: "white" }}>
+                <div style={{ width: "60%", background: "white" }}>
                   <h3 style={{ margin: "16px 0" }}>Todo List</h3>
+                  <div>{<Input placeholder="Basic usage" />}</div>
                   <div>
-                    {
-                      <Search
-                        placeholder="input search text"
-                        enterButton="add"
-                        size="large"
-                        onSearch={value => console.log(value)}
-                      />
-                    }
+                    {" "}
+                    <Button type="primary">Add</Button>{" "}
                   </div>
-                  ,
                   <List
                     size="large"
-                    bordered
-                    dataSource={data}
-                    renderItem={item => <List.Item>{item}</List.Item>}
+                    dataSource={this.state.todos}
+                    renderItem={todo => <List.Item>{todo.item}</List.Item>}
                   />
                 </div>
                 {/* </Layout> */}

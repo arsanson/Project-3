@@ -85,5 +85,12 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/me", authWare, function(req, res) {
+    res.json({
+      id: req.user._id,
+      username: req.user.username
+    });
+  });
+
   app.post("/api/playlist", spotifyRequest);
 };
