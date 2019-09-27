@@ -76,7 +76,7 @@ class index extends Component {
         password: this.state.newPassword,
         genre: this.state.newGenre
       })
-    }).then(response => console.log(response));
+    }).then(response => this.props.history.push("/"));
   };
 
   //login submit
