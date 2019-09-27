@@ -38,7 +38,7 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/createtodo", function(req, res) {
+  app.post("/api/createtodos", function(req, res) {
     TodoList.create(req.body)
       .then(function(data) {
         res.json({ message: "Todo Created" });
