@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
 const User = require("../models/user");
-const TodoList = require("../models/todoList");
+const TodoList = require("../models/todolist");
 const spotifyRequest = require("./spotify");
 require("dotenv").config();
 
