@@ -80,6 +80,10 @@ class index extends Component {
     });
   };
 
+
+
+
+
   //login submit
   handleSubmit = e => {
     e.preventDefault();
@@ -266,7 +270,7 @@ class index extends Component {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                  // href="../loggedIn"
+                // href="../loggedIn"
                 >
                   Log in
                 </Button>
