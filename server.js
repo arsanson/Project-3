@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const port = 3001;
+const PORT = process.env.PORT || 3001;
 
 //Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -16,14 +16,14 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Route for retrieving all Users from the db
-app.get("/user", function(req, res) {
+app.get("/user", function (req, res) {
   // Find all Users
   db.User.find({})
-    .then(function(dbUser) {
+    .then(function (dbUser) {
       // If all Users are successfully found, send them back to the client
       res.json(dbUser);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       // If an error occurs, send the error back to the client
       res.json(err);
     });
@@ -38,4 +38,4 @@ mongoose.connect(
 );
 
 // start the server
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
