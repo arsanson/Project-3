@@ -47,7 +47,7 @@ class index extends Component {
   };
   accountDrawer = () => {
     this.setState({
-      show: true
+      show: !this.state.show
     });
   };
 
@@ -76,7 +76,10 @@ class index extends Component {
         password: this.state.newPassword,
         genre: this.state.newGenre
       })
-    }).then(response => this.props.history.push("/"));
+    }).then(response => {
+      console.log(response);
+      this.accountDrawer();
+    });
   };
 
   //login submit
@@ -323,10 +326,6 @@ class index extends Component {
             {/* Sidebar Date/Time Set----------------------------------------------------------------------------------------------- */}
           </Drawer>
           <div>
-            {/* <Button type="primary" onClick={this.accountDrawer}>
-                <Icon type="plus" /> Create Account
-              </Button> */}
-
             <Drawer
               title="Create a new account"
               onClose={this.onClose}
