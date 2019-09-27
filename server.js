@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const path = require("path");
 const PORT = process.env.PORT || 3001;
 
 //Define middleware here
@@ -30,6 +31,9 @@ app.get("/user", function(req, res) {
 });
 
 //Route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 //Connect to the Mongo DB
 mongoose.connect(
