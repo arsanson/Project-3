@@ -47,19 +47,19 @@ class clock extends Component {
     });
   };
 
-  // CountdownTimer(props) {
-  //   console.log("props", props);
-  // }
+  CountdownTimer(props) {
+    console.log("props", props);
+  }
 
   render() {
-    // var matches = document.querySelectorAll("span.count");
+    var matches = document.querySelectorAll("span.count");
     let countSpan = 0;
 
-    // matches.forEach(match => {
-    //   countSpan += parseInt(match.innerHTML);
-    //     console.log(match);
-    //   console.log(match.innerHTML);
-    // });
+    matches.forEach(match => {
+      countSpan += parseInt(match.innerHTML);
+      //   console.log(match);
+      console.log(match.innerHTML);
+    });
     // console.log(matches);
 
     const audio = new Audio(song);
