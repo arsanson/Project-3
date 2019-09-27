@@ -16,12 +16,10 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "../../beforeLogin.css";
-import CountdownTimer from "react-component-countdown-timer";
-import "react-component-countdown-timer/lib/styles.css";
 import Unsplash from "react-unsplash-wrapper";
 import Auth from "../../utils/Auth";
-
 import API from "../../utils/API";
+import Clock from "./clock";
 
 const { Option } = Select;
 
@@ -160,54 +158,7 @@ class index extends Component {
     });
   };
 
-  timesUp = () => {
-    if (this.state.totalTime === 0) {
-      alert("times up");
-    }
-  };
-
-  //  Clock
-
-  getInitialState = () => {
-    return {
-      time: "00:00:00",
-      amPm: "am"
-    };
-  };
-
-  componentDidMount = () => {
-    setInterval(this.getTime, 1000);
-  };
-
-  getTime = () => {
-    const takeTwelve = n => (n > 12 ? n - 12 : n),
-      addZero = n => (n < 10 ? "0" + n : n);
-
-    setInterval(() => {
-      let d, h, m, s, t, amPm;
-
-      d = new Date();
-      h = addZero(takeTwelve(d.getHours()));
-      m = addZero(d.getMinutes());
-      s = addZero(d.getSeconds());
-      t = `${h}:${m}:${s}`;
-
-      amPm = d.getHours() >= 12 ? "pm" : "am";
-
-      this.setState({
-        time: t,
-        amPm: amPm
-      });
-    }, 1000);
-  };
-
-  // Clock
-
   render() {
-    // Alarm Clock Code Below
-    if (this.state.time === this.state.alarm) alert("hi");
-    // Alarm Clock Code Above
-
     const { SubMenu } = Menu;
     const { Header, Content, Footer, Sider } = Layout;
 
@@ -526,7 +477,7 @@ class index extends Component {
                     />
                   </Menu.Item>
                   <Menu.Item key="6">
-                    <Button type="primary" block>
+                    <Button type="primary" block onClick={this.setAlarm}>
                       Set Alarm
                     </Button>
                   </Menu.Item>
@@ -545,52 +496,10 @@ class index extends Component {
               }}
             >
               <Unsplash collectionId={8695541} style={{ opacity: ".9" }}>
-                <div id="container">
-                  <div className="outer">
-                    <div id="timerOuter" className="outer">
-                      <div id="timerInner" className="most-inner">
-                        <span>
-                          <h1>Timer</h1>
-                          {!this.state.totalTime && (
-                            <CountdownTimer count={0} hideDay />
-                          )}
-                          {this.state.totalTime && (
-                            <CountdownTimer
-                              count={this.state.totalTime}
-                              hideDay
-                            />
-                          )}
-                          {this.timesUp}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div id="alarmOuter" className="outer">
-                      <div id="alarmInner" className="most-inner">
-                        <h1>Alarm</h1>
-
-                        {this.state.alarm}
-                      </div>
-                    </div>
-
-                    <div className="inner">
-                      <div className="most-inner">
-                        <span
-                          className={
-                            this.state.time === "00:00:00"
-                              ? "time blink"
-                              : "time"
-                          }
-                        >
-                          {" "}
-                          <h1 style={{ fontSize: ".5em" }}>Current Time</h1>
-                          {this.state.time}
-                        </span>
-                        <span className="amPm">{this.state.amPm}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Clock
+                  totalTime={this.state.totalTime}
+                  alarm={this.state.alarm}
+                />
               </Unsplash>
             </Content>
             {/* Content------------------------------------------------------------------------------------------------------------- */}
