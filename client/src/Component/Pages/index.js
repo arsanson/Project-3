@@ -499,7 +499,12 @@ class index extends Component {
                 fontSize: "2em"
               }}
             >
-              <Unsplash collectionId={8695541} style={{ opacity: ".9" }}>
+              <Unsplash
+                collectionId={8695541}
+                width="950"
+                height="670"
+                style={{ opacity: ".9" }}
+              >
                 <Clock
                   totalTime={this.state.totalTime}
                   alarm={this.state.alarm}
