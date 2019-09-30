@@ -36,7 +36,8 @@ class index extends Component {
     seconds: "",
     alarm: "00:00:00",
     isTimerPaused: true,
-    todos: []
+    todos: [],
+    item: ""
   };
 
   showDrawer = () => {
@@ -162,7 +163,12 @@ class index extends Component {
       API.saveTodo({
         item: this.state.item
       })
-        .then(res => this.loadTodos())
+        .then(res => {
+          this.loadTodos();
+          this.setState({
+            item: ""
+          });
+        })
         .catch(err => console.log(err));
     }
   };
@@ -609,6 +615,7 @@ class index extends Component {
                       <Input
                         placeholder="Enter the Habits you want to follow"
                         name="item"
+                        value={this.state.item}
                         onChange={this.handleInputChange}
                       />
                     }
