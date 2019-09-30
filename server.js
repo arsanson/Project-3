@@ -31,9 +31,11 @@ app.get("/user", function(req, res) {
 });
 
 //Route
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
+}
 
 //Connect to the Mongo DB
 mongoose.connect(
