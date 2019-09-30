@@ -56,8 +56,8 @@ module.exports = function(app) {
     });
   });
 
-  app.delete("/api/delete:id", function(req, res) {
-    TodoList.deleteOne().then(function(todo) {
+  app.delete("/api/delete/:id", function(req, res) {
+    TodoList.deleteOne({ _id: req.params.id }).then(function(todo) {
       res.json(todo);
     });
   });
