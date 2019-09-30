@@ -18,7 +18,7 @@ export default {
     });
   },
   deleteTodo: function(id) {
-    return axios.delete("/api/delete" + id).then(res => {
+    return axios.delete("/api/delete/" + id).then(res => {
       return res.data;
     });
   }
