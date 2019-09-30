@@ -1,7 +1,6 @@
 // exporting an object containing all of our models
 
 module.exports = {
-    User: require("./User"),
-    TodoList: require("./Todolist")
-
+  User: require("./user"),
+  TodoList: require("./todolist")
 };

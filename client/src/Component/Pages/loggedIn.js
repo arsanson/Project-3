@@ -71,6 +71,7 @@ class index extends Component {
         Auth.logIn(username, password, response => {
           this.context.setUser(response);
           this.props.history.push("/");
+          console.log(response);
         });
       }
     });
@@ -110,6 +111,16 @@ class index extends Component {
   };
 
   //Insert-Todos
+  handleTodoSubmit = e => {
+    e.preventDefault();
+    if (this.state.item) {
+      API.saveTodo({
+        item: this.state.item
+      })
+        .then(res => this.loadTodos())
+        .catch(err => console.log(err));
+    }
+  };
 
   //Load To-Dos
   loadTodos = () => {
@@ -117,6 +128,15 @@ class index extends Component {
       .then(todos => this.setState({ todos: todos }))
       .catch(err => console.log(err));
   };
+
+  //Delete To-Dos
+  deleteTodo = id => {
+    API.deleteTodo(id)
+      .then(res => this.loadTodos())
+      .catch(err => console.log(err));
+  };
+
+  // Clock
 
   render() {
     const { SubMenu } = Menu;
@@ -152,7 +172,7 @@ class index extends Component {
               Logout
             </Menu.Item>
 
-            <Menu.Item key="2">Welcome</Menu.Item>
+            <Menu.Item key="2">Welcome {this.username} </Menu.Item>
 
             <Menu.Item
               key="3"
@@ -301,26 +321,6 @@ class index extends Component {
                           <Option value="Bag Pipes">Bag Pipes</Option>
                         </Select>
                       )}
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row gutter={16}>
-                  <Col span={24}>
-                    <Form.Item label="Description">
-                      {getFieldDecorator("description", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "please enter url description"
-                          }
-                        ]
-                      })(
-                        <Input.TextArea
-                          rows={1}
-                          placeholder="please enter your habits you would like to start tracking"
-                        />
-                      )}
-                      <Button type="primary">Add</Button>
                     </Form.Item>
                   </Col>
                 </Row>
@@ -500,15 +500,34 @@ class index extends Component {
                 > */}
                 <div style={{ width: "60%", background: "white" }}>
                   <h3 style={{ margin: "16px 0" }}>Todo List</h3>
-                  <div>{<Input placeholder="Basic usage" />}</div>
+                  <div>
+                    {
+                      <Input
+                        placeholder="Enter the Habits you want to follow"
+                        name="item"
+                        onChange={this.handleInputChange}
+                      />
+                    }
+                  </div>
                   <div>
                     {" "}
-                    <Button type="primary">Add</Button>{" "}
+                    <Button type="primary" onClick={this.handleTodoSubmit}>
+                      Add
+                    </Button>{" "}
                   </div>
                   <List
                     size="large"
+                    style={{ textAlign: "left" }}
                     dataSource={this.state.todos}
-                    renderItem={todo => <List.Item>{todo.item}</List.Item>}
+                    renderItem={todo => (
+                      <List.Item>
+                        <Icon
+                          type="check-circle"
+                          onClick={() => this.deleteTodo(todo._id)}
+                        />
+                        {todo.item}
+                      </List.Item>
+                    )}
                   />
                 </div>
 

@@ -1,19 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const port = 3001;
+const path = require("path");
+const PORT = process.env.PORT || 3001;
 
 //Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-require("./routes/api-routes.js")(app);
-
-//Serve up static assets(usually on heroku)
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
+
+require("./routes/api-routes.js")(app);
+
+//Serve up static assets(usually on heroku)
 
 // Route for retrieving all Users from the db
 app.get("/user", function(req, res) {
@@ -30,6 +31,11 @@ app.get("/user", function(req, res) {
 });
 
 //Route
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
+}
 
 //Connect to the Mongo DB
 mongoose.connect(
@@ -38,4 +44,4 @@ mongoose.connect(
 );
 
 // start the server
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));

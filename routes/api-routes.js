@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
-const User = require("../models/User");
-const TodoList = require("../models/TodoList");
+const User = require("../models/user");
+const TodoList = require("../models/todolist");
 const spotifyRequest = require("./spotify");
 require("dotenv").config();
 
@@ -38,7 +38,7 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/createtodo", function(req, res) {
+  app.post("/api/createtodos", function(req, res) {
     TodoList.create(req.body)
       .then(function(data) {
         res.json({ message: "Todo Created" });
@@ -53,6 +53,12 @@ module.exports = function(app) {
   app.get("/api/todos", function(req, res) {
     TodoList.find().then(function(todos) {
       res.json(todos);
+    });
+  });
+
+  app.delete("/api/delete:id", function(req, res) {
+    TodoList.deleteOne().then(function(todo) {
+      res.json(todo);
     });
   });
 

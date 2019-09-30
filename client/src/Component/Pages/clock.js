@@ -48,7 +48,7 @@ class clock extends Component {
   };
 
   CountdownTimer(props) {
-    console.log("props", props);
+    // console.log("props", props);
   }
 
   render() {
@@ -58,7 +58,7 @@ class clock extends Component {
     matches.forEach(match => {
       countSpan += parseInt(match.innerHTML);
       //   console.log(match);
-      console.log(match.innerHTML);
+      //console.log(match.innerHTML);
     });
     // console.log(matches);
 
