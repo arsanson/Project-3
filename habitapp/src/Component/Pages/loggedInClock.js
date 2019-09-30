@@ -3,7 +3,7 @@ import "react-component-countdown-timer/lib/styles.css";
 import React, { Component } from "react";
 import song from "../Music/Cello.mp3";
 
-class clock extends Component {
+class loginClock extends Component {
   state = {
     visible: false,
     show: false,
@@ -72,26 +72,38 @@ class clock extends Component {
     // Alarm Clock Code Above
 
     return (
-      <div id="container">
-        <div className="outer">
-          <div id="timerOuter" className="outer">
+      <div id="alarm">
+        <div
+          className="outer"
+          style={{
+            left: "15%",
+            marginLeft: "0"
+          }}
+        >
+          <div
+            id="timerOuter"
+            className="outer"
+            style={{ marginLeft: "0", top: "-15%" }}
+          >
             <div id="timerInner" className="most-inner">
               <span>
-                <h1>Timer</h1>
-                {!this.props.totalTime && <CountdownTimer count={0} hideDay />}
-                {this.props.totalTime && (
-                  <CountdownTimer count={this.props.totalTime} hideDay />
-                )}
-                {this.timesUp}
+                <h1 style={{ marginTop: "-25%" }}>Timer</h1>
+                <div style={{ marginTop: "50%" }}>
+                  {!this.props.totalTime && (
+                    <CountdownTimer count={0} hideDay />
+                  )}
+                  {this.props.totalTime && (
+                    <CountdownTimer count={this.props.totalTime} hideDay />
+                  )}
+                </div>
               </span>
             </div>
           </div>
 
-          <div id="alarmOuter" className="outer">
+          <div id="alarmOuter" className="outer" style={{ top: "-15%" }}>
             <div id="alarmInner" className="most-inner">
-              <h1>Alarm</h1>
-
-              {this.props.alarm}
+              <h1 style={{ marginTop: "-25%" }}>Alarm</h1>
+              <div style={{ marginTop: "50%" }}>{this.props.alarm}</div>
             </div>
           </div>
 
@@ -101,9 +113,13 @@ class clock extends Component {
                 className={
                   this.state.time === "00:00:00" ? "time blink" : "time"
                 }
+                style={{ top: "10%" }}
               >
                 {" "}
-                <h1 style={{ fontSize: ".5em" }}>Current Time</h1>
+                <h1 style={{ fontSize: ".5em", marginTop: "20%" }}>
+                  Current Time
+                </h1>
+                <div style={{ marginTop: "25%" }}>{this.state.time}</div>
                 {this.state.time}
               </span>
               <span className="amPm">{this.state.amPm}</span>
@@ -115,4 +131,4 @@ class clock extends Component {
   }
 }
 
-export default clock;
+export default loginClock;
