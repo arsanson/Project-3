@@ -56,6 +56,12 @@ module.exports = function(app) {
     });
   });
 
+  app.delete("/api/delete:id", function(req, res) {
+    TodoList.deleteOne().then(function(todo) {
+      res.json(todo);
+    });
+  });
+
   app.post("/api/authenticate", function(req, res) {
     const { username, password } = req.body;
     User.findOne({ username: username }).then(function(dbUser) {

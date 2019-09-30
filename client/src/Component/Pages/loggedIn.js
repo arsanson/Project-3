@@ -70,6 +70,7 @@ class index extends Component {
         Auth.logIn(username, password, response => {
           this.context.setUser(response);
           this.props.history.push("/");
+          console.log(response);
         });
       }
     });
@@ -173,6 +174,13 @@ class index extends Component {
       .catch(err => console.log(err));
   };
 
+  //Delete To-Dos
+  deleteTodo = id => {
+    API.deleteTodo(id)
+      .then(res => this.loadTodos())
+      .catch(err => console.log(err));
+  };
+
   // Clock
 
   render() {
@@ -213,7 +221,7 @@ class index extends Component {
               Logout
             </Menu.Item>
 
-            <Menu.Item key="2">Welcome</Menu.Item>
+            <Menu.Item key="2">Welcome {this.username} </Menu.Item>
 
             <Menu.Item
               key="3"
@@ -599,7 +607,7 @@ class index extends Component {
                   <div>
                     {
                       <Input
-                        placeholder="Basic usage"
+                        placeholder="Enter the Habits you want to follow"
                         name="item"
                         onChange={this.handleInputChange}
                       />
@@ -613,8 +621,17 @@ class index extends Component {
                   </div>
                   <List
                     size="large"
+                    style={{ textAlign: "left" }}
                     dataSource={this.state.todos}
-                    renderItem={todo => <List.Item>{todo.item}</List.Item>}
+                    renderItem={todo => (
+                      <List.Item>
+                        <Icon
+                          type="check-circle"
+                          onClick={() => this.deleteTodo(todo._id)}
+                        />
+                        {todo.item}
+                      </List.Item>
+                    )}
                   />
                 </div>
                 {/* </Layout> */}

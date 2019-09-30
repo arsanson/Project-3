@@ -16,5 +16,10 @@ export default {
     return axios.get("/api/todos").then(res => {
       return res.data;
     });
+  },
+  deleteTodo: function(id) {
+    return axios.delete("/api/delete" + id).then(res => {
+      return res.data;
+    });
   }
 };
